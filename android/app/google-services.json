@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "779403121350",
+    "firebase_url": "https://ourwear-prototype.firebaseio.com",
+    "project_id": "ourwear-prototype",
+    "storage_bucket": "ourwear-prototype.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779403121350:android:6c6342b64fdc798d89bdc7",
+        "android_client_info": {
+          "package_name": "com.perkedel.ourwearprototype"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779403121350-7udlseuti8bpdhsekkclrb9cd8i4i0kq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYxpgrYWb2WVcbZzZl-8hgcLPkNv4f_CA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779403121350-7udlseuti8bpdhsekkclrb9cd8i4i0kq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
