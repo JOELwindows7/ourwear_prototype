@@ -8,7 +8,7 @@ class AccountScaffold extends StatelessWidget {
       // https://stackoverflow.com/questions/46551268/when-the-keyboard-appears-the-flutter-widgets-resize-how-to-prevent-this
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey,
         elevation: 0,
       ),
       body: EnterAccount(),

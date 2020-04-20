@@ -10,7 +10,7 @@ class ProfileHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.orange,
       ),
       body: Container(
         child: Column(
