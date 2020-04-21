@@ -1,6 +1,6 @@
 # https://medium.com/better-programming/ci-cd-for-flutter-apps-using-github-actions-b833f8f7aac
 # https://github.com/marketplace/actions/flutter-action
-
+# you need to tag your commit first!
 on: push
 name: Test, Build and Release apk
 jobs:
