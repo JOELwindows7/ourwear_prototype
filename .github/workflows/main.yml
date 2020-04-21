@@ -1,8 +1,9 @@
 # https://medium.com/better-programming/ci-cd-for-flutter-apps-using-github-actions-b833f8f7aac
 # https://github.com/marketplace/actions/flutter-action
-# you need to tag your commit first!
+# you need to tag your commit first! wait nvm. this ncipollo workflow is broken I think. succ!
+# https://github.com/marketplace/actions/flutter-action
 on: push
-name: Test, Build and Release apk
+name: Test, Build and That's it
 jobs:
   build:
     name: Build APK
@@ -17,9 +18,9 @@ jobs:
         channel: 'stable'
     - run: flutter pub get
     #- run: flutter test
-    - run: flutter build apk --debug --split-per-abi
-    - name: Create a Release APK
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: "build/app/outputs/apk/debug/*.apk"
-        token: ${{ secrets.TOKEN }}
+    - run: flutter build apk --split-per-abi
+    #- name: Create a Release APK
+    #  uses: ncipollo/release-action@v1
+    #  with:
+    #    artifacts: "build/app/outputs/apk/debug/*.apk"
+    #    token: ${{ secrets.TOKEN }}
