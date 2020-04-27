@@ -30,6 +30,14 @@ dependencies:
   flutter_spinkit: any
   font_awesome_flutter: any
 
+  flame: any
+  box2d_flame: any
+  sensors: any
+  shake: any
+  sqflite: any
+
+  fluttertoast: any
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

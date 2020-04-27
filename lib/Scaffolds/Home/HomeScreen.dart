@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/Scaffolds/Account/AccountScreen.dart';
+import 'package:ourwearprototype/Scaffolds/Games/game-selector-hub.dart';
+import 'package:ourwearprototype/Scaffolds/Home/FrontPageTemp.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -25,7 +27,21 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.green,
       ),
       body: Container(
-        //TODO: stateful home screen contains
+        child: FrontPageTemp(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => GameHubScaffold()
+              ),
+          );
+        },
+        child: Icon(Icons.videogame_asset),
+        hoverColor: Colors.orange,
+        elevation: 0,
+        tooltip: 'Mini Games',
       ),
     );
   }
