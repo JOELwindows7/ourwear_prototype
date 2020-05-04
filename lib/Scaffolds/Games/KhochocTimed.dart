@@ -181,7 +181,9 @@ class _KhochocTimedState extends State<KhochocTimed> {
           icon: Icon(Icons.arrow_back),
           onPressed: (){
             Fluttertoast.showToast(msg: 'You got $KhochocCoin 💰 Coins!');
-            detector.stopListening();
+            if (detector != null) {
+              detector.stopListening();
+            }
             //databaser.closeDatabase();
             Navigator.pop(context);
           },

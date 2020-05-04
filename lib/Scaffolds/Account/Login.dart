@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/shared/constants.dart';
+import 'package:ourwearprototype/shared/loading.dart';
 import 'package:ourwearprototype/shared/tombol/SocialButton.dart';
 import 'package:ourwearprototype/services/auth.dart';
 
@@ -26,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return loading? Loading(): Form(
       key: _formKey,
       child: SingleChildScrollView(
         child: Container(
@@ -74,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: textInputDecoration.copyWith(
                       hintText: 'Kata sandi',
                     ),
-                    validator: (val) => val.length < 6 ? 'Mohon masukan kata sandi diatas 6 karakter' : null,
+//                    validator: (val) => val.length < 6 ? 'Mohon masukan kata sandi diatas 6 karakter' : null,
                     obscureText: true,
                     onChanged: (val){
                       setState(() {

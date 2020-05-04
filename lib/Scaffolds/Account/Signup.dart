@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/shared/constants.dart';
 import 'package:ourwearprototype/services/auth.dart';
+import 'package:ourwearprototype/shared/loading.dart';
 
 class SignUpPage extends StatefulWidget {
 
@@ -27,7 +28,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return loading? Loading(): Form(
       key: _formKey,
       child: SingleChildScrollView(
         child: Container(

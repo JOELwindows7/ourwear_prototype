@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ourwearprototype/Scaffolds/Games/LoadingTest.dart';
+import 'package:ourwearprototype/shared/loading.dart';
 
 import 'ContainsScaffold.dart';
 import 'Khochoc.dart';
@@ -62,6 +64,7 @@ class _GameListState extends State<GameList> {
     DaftarGame(Icons.vibration, 'Khochoc Timed!'),
     DaftarGame(Icons.score, 'Khochoc Highscore'),
     DaftarGame(Icons.redeem, 'OurWear Roff Skets'),
+    DaftarGame(Icons.bubble_chart, 'Loading Screen'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -98,6 +101,9 @@ class _GameListState extends State<GameList> {
                     break;
                   case 7:
                     return OurWearRoffSkets();
+                    break;
+                  case 8:
+                    return LoadingTest();
                     break;
                   default:
                     return NotFoundError();
