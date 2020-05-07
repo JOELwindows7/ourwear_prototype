@@ -37,6 +37,8 @@ dependencies:
   sqflite: any
 
   fluttertoast: any
+  page_view_indicators: any
+  page_indicator: any
 
 dev_dependencies:
   flutter_test:

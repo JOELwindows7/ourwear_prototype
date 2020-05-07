@@ -1,6 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ourwearprototype/Scaffolds/Games/AnotherPageIndicatorDemo.dart';
 import 'package:ourwearprototype/Scaffolds/Games/LoadingTest.dart';
+import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/ArrowPageIndicator.dart';
+import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/LinearProgressPageIndicator.dart';
+import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/PageViewDemoImport.dart';
+import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/StepPageIndicator.dart';
+import 'package:ourwearprototype/Scaffolds/Games/PagedSwipe/PagedSwipeMother.dart';
+import 'package:ourwearprototype/Scaffolds/Games/TabPageView.dart';
 import 'package:ourwearprototype/shared/loading.dart';
 
 import 'ContainsScaffold.dart';
@@ -65,6 +72,13 @@ class _GameListState extends State<GameList> {
     DaftarGame(Icons.score, 'Khochoc Highscore'),
     DaftarGame(Icons.redeem, 'OurWear Roff Skets'),
     DaftarGame(Icons.bubble_chart, 'Loading Screen'),
+    DaftarGame(Icons.pageview, 'Page View sample'),
+    DaftarGame(Icons.pageview, 'Demo of PageView Indicator'),
+    DaftarGame(Icons.arrow_forward, 'Arrow PageView Indicator'),
+    DaftarGame(Icons.linear_scale, 'Linear Progress Indicator'),
+    DaftarGame(Icons.check_circle_outline, 'Step Page Indicator'),
+    DaftarGame(Icons.pages, 'Another Page Indicator pubspec'),
+    DaftarGame(Icons.tab, 'Tabbed Page View'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -104,6 +118,27 @@ class _GameListState extends State<GameList> {
                     break;
                   case 8:
                     return LoadingTest();
+                    break;
+                  case 9:
+                    return PagedSwipeScaffold();
+                    break;
+                  case 10:
+                    return PageViewDemo();
+                    break;
+                  case 11:
+                    return ArrowPageIndicatorDemo();
+                    break;
+                  case 12:
+                    return LinearProgressPageIndicatorDemo();
+                    break;
+                  case 13:
+                    return StepPageIndicatorDemo();
+                    break;
+                  case 14:
+                    return AnotherPageIndicatorDemo();
+                    break;
+                  case 15:
+                    return TabScaffold();
                     break;
                   default:
                     return NotFoundError();
