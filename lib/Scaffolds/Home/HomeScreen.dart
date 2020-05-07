@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/Scaffolds/Account/AccountScreen.dart';
+import 'package:ourwearprototype/Scaffolds/Account/AccountScreenLess.dart';
 import 'package:ourwearprototype/Scaffolds/Games/game-selector-hub.dart';
 import 'package:ourwearprototype/Scaffolds/Home/FrontPageTemp.dart';
 

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ourwearprototype/Filter/StreamProviderStartOurwear.dart';
 import 'package:ourwearprototype/Scaffolds/Account/Wrapper.dart';
 import 'package:ourwearprototype/Scaffolds/StartOurWear.dart';
+
+import 'Scaffolds/newStartOurWear.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.green,
       ),
-      home: StartOurWear(),
+      home: StartOurWearWithAccount(),
     );
   }
 }
