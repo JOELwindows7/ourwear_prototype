@@ -46,17 +46,17 @@ class ArrowPageIndicatorDemoState extends State<ArrowPageIndicatorDemo> {
       ArrowPageIndicator(
         iconPadding: EdgeInsets.symmetric(horizontal: 16.0),
         isInside: true,
-        leftIcon: Image.asset(
-          "assets/images/left_arrow.png",
-          width: 46.0,
-          height: 46.0,
-        ),
-        rightIcon: Image.asset(
-          "assets/images/right_arrow.png",
-          width: 46.0,
-          height: 46.0,
-        ),
-        /* rightIcon: Icon(
+//        leftIcon: Image.asset(
+//          "assets/images/left_arrow.png",
+//          width: 46.0,
+//          height: 46.0,
+//        ),
+//        rightIcon: Image.asset(
+//          "assets/images/right_arrow.png",
+//          width: 46.0,
+//          height: 46.0,
+//        ),
+         rightIcon: Icon(
               Icons.arrow_right,
               color: Colors.white,
               size: 90.0,
@@ -65,7 +65,7 @@ class ArrowPageIndicatorDemoState extends State<ArrowPageIndicatorDemo> {
               Icons.arrow_left,
               color: Colors.white,
               size: 90.0,
-            ),*/
+            ),
         pageController: _pageController2,
         currentPageNotifier: _currentPageNotifier2,
         itemCount: _items.length,
