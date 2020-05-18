@@ -6,8 +6,12 @@ import 'package:ourwearprototype/Scaffolds/Account/Wrapper.dart';
 import 'package:ourwearprototype/Scaffolds/FirstTimer/HalamanFiturView.dart';
 import 'package:ourwearprototype/Scaffolds/FirstTimer/SelamatDatang.dart';
 import 'package:ourwearprototype/Scaffolds/Home/HomeScreen.dart';
+import 'package:ourwearprototype/Scaffolds/Loading/SplashScreen.dart';
 import 'package:ourwearprototype/models/user.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
+import 'dart:ui';
+import 'package:quiver/async.dart';
 
 class NewStartOurWear extends StatefulWidget {
   @override
@@ -18,6 +22,39 @@ class _NewStartOurWearState extends State<NewStartOurWear> {
   var showFeaturePage = true;
 
   var hasSighted = false;
+
+  int _timerStart = 2;
+  int _timerCurrent = 1;
+  bool _openPage = false;
+  bool _first = true;
+  void StartTimer(){
+    CountdownTimer countdownTimer = CountdownTimer(
+      new Duration(seconds: _timerStart),
+      new Duration(seconds:1),
+    );
+
+    var sub = countdownTimer.listen(null);
+    sub.onData((duration){
+      setState(() {
+        _timerCurrent = _timerStart - duration.elapsed.inSeconds;
+      });
+    });
+
+    sub.onDone((){
+      print('Init Countdown Done!');
+      sub.cancel();
+      setState(() {
+        _openPage = true;
+        _first = false;
+      });
+    });
+  }
+  @override
+  void initState() {
+    StartTimer();
+    // TODO: implement initState
+    super.initState();
+  }
 
   void noFeaturePage(){
     setState(() {
@@ -37,12 +74,17 @@ class _NewStartOurWearState extends State<NewStartOurWear> {
       showFeaturePage = false;
     }
 
-    if(showFeaturePage && !hasSighted){
-      return SelamatDatangScaffold(
-        noFeaturePage: noFeaturePage,
-      );
+    if(_openPage){
+      if(showFeaturePage && !hasSighted){
+        return SelamatDatangScaffold(
+          noFeaturePage: noFeaturePage,
+        );
+      } else {
+        return HomeScreen();
+      }
     } else {
-      return HomeScreen();
+      return SplashScreen();
     }
+
   }
 }
