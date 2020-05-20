@@ -4,6 +4,9 @@ import 'package:ourwearprototype/Scaffolds/Account/AccountScreen.dart';
 import 'package:ourwearprototype/Scaffolds/Account/AccountScreenLess.dart';
 import 'package:ourwearprototype/Scaffolds/Games/game-selector-hub.dart';
 import 'package:ourwearprototype/Scaffolds/Home/FrontPageTemp.dart';
+import 'package:ourwearprototype/Scaffolds/Prosotipe/CartProsotipe.dart';
+
+// Ourwear protection
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -14,6 +17,17 @@ class HomeScreen extends StatelessWidget {
         actions: <Widget>[
           FlatButton.icon(
               onPressed: (){
+                Navigator.push(context,
+                    MaterialPageRoute(
+                      builder: (context)=> CartProsotipe(),
+                    ),
+                );
+              },
+              icon: Icon(Icons.shopping_cart),
+              label: Text(''),
+          ),
+          FlatButton.icon(
+              onPressed: (){
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -22,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               icon: Icon(Icons.person),
-              label: Text('Account')
+              label: Text(''),
           ),
         ],
         backgroundColor: Colors.green,
