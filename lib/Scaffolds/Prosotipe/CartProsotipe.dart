@@ -23,6 +23,12 @@ class CartItems{
   final String title;
 }
 
+class UndoStack{
+  final int wasIndex;
+  final CartItems thingy;
+  UndoStack(this.wasIndex,this.thingy);
+}
+
 class CartProsotipe extends StatefulWidget {
   @override
   _CartProsotipeState createState() => _CartProsotipeState();
@@ -33,8 +39,10 @@ class CartProsotipe extends StatefulWidget {
 // https://youtu.be/39_HhRkXDpQ
 // https://github.com/Perkedel/HexagonEngine/tree/master/Audacity/PoopostExplosion
 // https://medium.com/flutter-community/how-to-add-music-audio-to-your-flutter-app-dcb6162c32d7
+// https://flutter.dev/docs/cookbook/gestures/dismissible
 
 class _CartProsotipeState extends State<CartProsotipe> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -64,12 +72,13 @@ class _CartProsotipeState extends State<CartProsotipe> {
   }
 
   List<CartItems> cartItems = [
-    CartItems(Icons.redeem, 'AAAAAAAAAAAA'),
-    CartItems(Icons.redeem, 'AAAAAAAAAAAA'),
-    CartItems(Icons.redeem, 'AAAAAAAAAAAA'),
-    CartItems(Icons.redeem, 'AAAAAAAAAAAA'),
-    CartItems(Icons.redeem, 'AAAAAAAAAAAA'),
+    CartItems(Icons.redeem, 'AAAAAAAAAAAA1'),
+    CartItems(Icons.redeem, 'AAAAAAAAAAAA2'),
+    CartItems(Icons.redeem, 'AAAAAAAAAAAA3'),
+    CartItems(Icons.redeem, 'AAAAAAAAAAAA4'),
+    CartItems(Icons.redeem, 'AAAAAAAAAAAA5'),
   ];
+  List<UndoStack> undoStacks = [];
   AudioCache audioCache = AudioCache();
   AudioPlayer audioPlayer;
   String patho = '../asset/audio/explosionLoud.wav';
@@ -87,13 +96,40 @@ class _CartProsotipeState extends State<CartProsotipe> {
     super.dispose();
   }
 
+  bool _undoDisabled = true;
+
+  // https://stackoverflow.com/questions/49351648/how-do-i-disable-a-button-in-flutter
+  void _undoNow(){
+    _scaffoldKey.currentState.removeCurrentSnackBar();
+    if(undoStacks.isNotEmpty){
+      setState(() {
+        cartItems.insert(undoStacks.last.wasIndex, undoStacks.last.thingy);
+        undoStacks.removeLast();
+        if(undoStacks.isEmpty) {
+          _undoDisabled = true;
+        }
+      });
+    } else {
+      setState(() {
+        _undoDisabled = true;
+      });
+
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // https://medium.com/@ksheremet/flutter-showing-snackbar-within-the-widget-that-builds-a-scaffold-3a817635aeb2
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Haha Cart'),
         actions: <Widget>[
+          FlatButton(
+            child: Icon(Icons.undo),
+            onPressed: _undoDisabled? null : _undoNow,
+          ),
           FlatButton.icon(
               onPressed: (){
 
@@ -108,13 +144,38 @@ class _CartProsotipeState extends State<CartProsotipe> {
           //TODO: sort items based on owner
           itemCount: cartItems.length,
           itemBuilder: (context, index){
+            final tempCart = cartItems.elementAt(index);
               return Dismissible(
-                key: ValueKey(cartItems.elementAt(index)),
+                //https://stackoverflow.com/questions/47735143/dismissing-a-dismissible-with-flutter-dart
+                // use Unique Key generator class!
+                key: UniqueKey(),
+                background: Container(
+                  color: Colors.red,
+                ),
                 child: ListTile(
                   leading: Icon(cartItems.elementAt(index).ikon),
                   title: Text(cartItems.elementAt(index).title),
                 ),
-                onDismissed: (index){
+                onDismissed: (direction){
+                  print("Remove $index");
+                  setState(() {
+                    undoStacks.add(UndoStack(index, cartItems.elementAt(index)));
+                    cartItems.removeAt((index));
+                  });
+                  // https://flutter.dev/docs/cookbook/design/snackbars
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text('Remove ${tempCart.title}'),
+                    action: SnackBarAction(
+                      label: 'Undo',
+                      onPressed: _undoNow,
+                    ),
+                  ));
+                  if(undoStacks.isNotEmpty){
+                    setState(() {
+                      _undoDisabled = false;
+                    });
+                  }
+
                   //playThat();
                   loadThat();
                 },
