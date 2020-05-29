@@ -12,6 +12,16 @@ class _MakeShiftCheckOutState extends State<MakeShiftCheckOut> {
       appBar: AppBar(
         title: Text('CheckOut'),
       ),
+      body: Container(
+        child: Center(
+          child: RaisedButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            child: Text('Pay'),
+          ),
+        ),
+      ),
     );
   }
 }
