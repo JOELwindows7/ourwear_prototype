@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/Scaffolds/Games/PagedSwipe/Pages/Page1.dart';
 import 'package:ourwearprototype/Scaffolds/Games/game-selector-hub.dart';
+import 'package:ourwearprototype/Scaffolds/Prosotipe/MakeshiftItemView.dart';
 import 'package:page_indicator/page_indicator.dart';
 
 class FrontPageTemp extends StatelessWidget {
@@ -20,7 +21,11 @@ class FrontPageTemp extends StatelessWidget {
           children: <Widget>[
             RaisedButton.icon(
                 onPressed: (){
-
+                  Navigator.push(context,
+                    MaterialPageRoute(
+                      builder: (context) => MakeshiftItemView()
+                    ),
+                  );
                 },
                 icon: Icon(Icons.error),
                 label: Row(
