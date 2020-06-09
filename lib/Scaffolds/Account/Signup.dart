@@ -141,7 +141,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         });
                         //print(email);
                         //print(password);
-                        dynamic result = await _auth.registerWIthEmailAndPassword(email, password);
+                        dynamic result = await _auth.registerWIthEmailAndPassword(email, password, phoneNumber: phoneNumber);
                         if(result == null){
                           setState(() {
                             loading = false;

@@ -51,8 +51,9 @@ class AuthService{
   }
 
   //register with email & password
-  Future registerWIthEmailAndPassword(String email, String password) async {
+  Future registerWIthEmailAndPassword(String email, String password, {String phoneNumber}) async {
     try{
+      String tempNumberPhone = phoneNumber ?? '0';
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password
@@ -61,6 +62,7 @@ class AuthService{
 
       // create a new document with ui of user
       await DatabaseService(uid: user.uid).updateUserData('0', 'new crew member', 100);
+      await DatabaseService(uid: user.uid).updateWearerData('New Wearer', tempNumberPhone, 'address');
 
       return _userFromFirebaseUser(user);
     } catch(e){

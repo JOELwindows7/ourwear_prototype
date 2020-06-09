@@ -51,3 +51,8 @@ class _MakeshiftItemViewState extends State<MakeshiftItemView> {
     );
   }
 }
+
+// Maybe try add Software rental? no. uh..
+// Oh I know! rental hardware!! perhaps. ladder, drill, lamp, briefcase, cook ware, idk
+// wash per use. the owner has to wash it everytime rent finished
+// payment gateway, sandbox.
