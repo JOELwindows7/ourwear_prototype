@@ -5,6 +5,11 @@ import 'package:ourwearprototype/services/auth.dart';
 import 'package:ourwearprototype/services/database.dart';
 import 'package:provider/provider.dart';
 
+//https://medium.com/flutter-community/firebase-startup-logic-and-custom-user-profiles-6309562ea8b7
+// https://stackoverflow.com/q/50252569/9079640
+// https://youtu.be/YFCSODyFxbE
+// https://stackoverflow.com/q/50252569/9079640
+
 class RentalListView extends StatelessWidget {
 
   final db = Firestore.instance;
