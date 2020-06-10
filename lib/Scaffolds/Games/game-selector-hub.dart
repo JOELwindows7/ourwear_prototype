@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/Scaffolds/Games/AnotherPageIndicatorDemo.dart';
+import 'package:ourwearprototype/Scaffolds/Games/JustLookRentalLists.dart';
 import 'package:ourwearprototype/Scaffolds/Games/LoadingTest.dart';
 import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/ArrowPageIndicator.dart';
 import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/LinearProgressPageIndicator.dart';
@@ -79,6 +80,7 @@ class _GameListState extends State<GameList> {
     DaftarGame(Icons.check_circle_outline, 'Step Page Indicator'),
     DaftarGame(Icons.pages, 'Another Page Indicator pubspec'),
     DaftarGame(Icons.tab, 'Tabbed Page View'),
+    DaftarGame(Icons.nature, 'Rental List'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -139,6 +141,9 @@ class _GameListState extends State<GameList> {
                     break;
                   case 15:
                     return TabScaffold();
+                    break;
+                  case 16:
+                    return JustLookRentalLists();
                     break;
                   default:
                     return NotFoundError();

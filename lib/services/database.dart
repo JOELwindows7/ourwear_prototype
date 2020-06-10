@@ -32,8 +32,9 @@ class DatabaseService {
     });
   }
 
-  Future updateRentalData(String name, String userId, String price, String descriptions, int timeBorrowDay) async {
+  Future updateRentalData(String name, String userId, String price, String descriptions, int timeBorrowDay, String imager) async {
     return await rentalCollection.document(uid).setData({
+      'imager' : imager,
       'nama' : name,
       'userId' : userId,
       'price' : price,
@@ -56,9 +57,10 @@ class DatabaseService {
   List<Rental> _rentalListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((e) {
       return Rental(
-        nama: e.data['nama'] ?? '',
-        userId: e.data['userId'] ?? '',
-        price: e.data['price'] ?? '',
+        nama: e.data['nama'] ?? '<an item>',
+        userId: e.data['userId'] ?? '<item owner>',
+        imager: e.data['imager'] ?? 'Re',
+        price: e.data['price'] ?? '<price tag>',
         descriptions:  e.data['descriptions'] ?? '',
         timeBorrowDay: e.data['timeBorrowDay'] ?? 0,
       );
@@ -72,6 +74,15 @@ class DatabaseService {
       name: snapshot.data['name'],
       sugars: snapshot.data['sugars'],
       strength: snapshot.data['strength'],
+    );
+  }
+
+  Wearer _wearerDataFromSnapshot(DocumentSnapshot snapshot){
+    return Wearer(
+      uid: uid,
+      nama: snapshot.data['nama'],
+      phone: snapshot.data['phone'],
+      address: snapshot.data['address'],
     );
   }
 
@@ -90,5 +101,10 @@ class DatabaseService {
   Stream<UserData> get userData{
     return brewCollection.document(uid).snapshots()
       .map(_userDataFromSnapshot);
+  }
+
+  Stream<Wearer> get wearerData{
+    return wearerCollection.document(uid).snapshots()
+        .map(_wearerDataFromSnapshot);
   }
 }
