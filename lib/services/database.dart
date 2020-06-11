@@ -1,9 +1,11 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:ourwearprototype/models/Renter.dart';
 import 'package:ourwearprototype/models/brew.dart';
 import 'package:ourwearprototype/models/user.dart';
+import 'package:provider/provider.dart';
 
 
 class DatabaseService {
@@ -15,6 +17,7 @@ class DatabaseService {
   final CollectionReference brewCollection = Firestore.instance.collection('brews');
   final CollectionReference wearerCollection = Firestore.instance.collection('wearers');
   final CollectionReference rentalCollection = Firestore.instance.collection('rentals');
+  final CollectionReference cartCollection = Firestore.instance.collection('carts');
 
   Future updateUserData(String sugars, String name, int strength) async {
     return await brewCollection.document(uid).setData({
@@ -40,6 +43,33 @@ class DatabaseService {
       'price' : price,
       'descriptions' : descriptions,
       'timeBorrowDay' : timeBorrowDay,
+    });
+  }
+
+  Future addRentalData(String name, String userId, String price, String descriptions, int timeBorrowDay, String imager) async {
+    return await rentalCollection.add({
+      'imager' : imager,
+      'nama' : name,
+      'userId' : userId,
+      'price' : price,
+      'descriptions' : descriptions,
+      'timeBorrowDay' : timeBorrowDay,
+    });
+  }
+
+  Future updateCartData(String name,) async {
+    return await cartCollection.document(uid).setData({
+      'uid' : uid,
+      'nama' : name,
+    });
+  }
+
+  Future updateCartItemData(String itemId, String quantity,) async {
+    //TODO: query rental list, get the item refered by ID
+    var tempQuantity = quantity;
+    return await wearerCollection.document(uid).collection('cartItems').document(itemId).setData({
+      'itemId' : itemId,
+      'quantity' : tempQuantity,
     });
   }
 

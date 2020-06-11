@@ -18,18 +18,24 @@ class Rental {
   final String descriptions;
   final int timeBorrowDay;
   final bool available;
-  //TODO: available status Y/N
+  //TODO: available status Y/N, Color Type
 
   Rental({this.uid, this.userId, this.nama, this.imager, this.descriptions, this.price, this.timeBorrowDay, this.available});
 }
 
 class Cart{
-  final String uid;
+  final String uid; //user id. each user has own cart
   final String nama;
-  final String itemUid;
-  final int quantity;
 
-  Cart({this.uid, this.nama, this.itemUid, this.quantity});
+  Cart({this.uid, this.nama,});
+}
+
+class CartItem{
+  final itemUid;
+  final quantity;
+  final itemName;
+
+  CartItem({this.itemUid, this.quantity, this.itemName});
 }
 
 class TransactionOrders{

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/Scaffolds/Games/AnotherPageIndicatorDemo.dart';
+import 'package:ourwearprototype/Scaffolds/Games/FakeAddToCart.dart';
 import 'package:ourwearprototype/Scaffolds/Games/JustLookRentalLists.dart';
 import 'package:ourwearprototype/Scaffolds/Games/LoadingTest.dart';
 import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/ArrowPageIndicator.dart';
@@ -81,6 +82,7 @@ class _GameListState extends State<GameList> {
     DaftarGame(Icons.pages, 'Another Page Indicator pubspec'),
     DaftarGame(Icons.tab, 'Tabbed Page View'),
     DaftarGame(Icons.nature, 'Rental List'),
+    DaftarGame(Icons.add_shopping_cart, 'Fakely Add to shopping cart'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -144,6 +146,9 @@ class _GameListState extends State<GameList> {
                     break;
                   case 16:
                     return JustLookRentalLists();
+                    break;
+                  case 17:
+                    return FakeAddToCart();
                     break;
                   default:
                     return NotFoundError();
