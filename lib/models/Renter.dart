@@ -34,8 +34,9 @@ class CartItem{
   final itemUid;
   final quantity;
   final itemName;
+  final rentalReference;
 
-  CartItem({this.itemUid, this.quantity, this.itemName});
+  CartItem({this.itemUid, this.quantity, this.itemName, this.rentalReference});
 }
 
 class TransactionOrders{

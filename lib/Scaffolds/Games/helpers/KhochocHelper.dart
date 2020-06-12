@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ourwearprototype/Scaffolds/Games/KhochocHighscore.dart';
+import 'package:ourwearprototype/services/database.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'dart:io';
@@ -12,6 +16,15 @@ class KhochocDatabaser{
   static Database _database;
 
   KhochocDatabaser._createObject();
+  final Pilih = Random();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  var userID;
+  Future getUserID() async{
+    FirebaseUser user = await _auth.currentUser();
+    String id = user.uid;
+    userID = id;
+  }
 
   factory KhochocDatabaser(){
     if (_khochocDatabaser == null){
@@ -94,6 +107,7 @@ class KhochocDatabaser{
     );
 
     insert(object);
+
   }
 
   Future<void> submitScore(KhochocLogs object) async{
@@ -103,7 +117,10 @@ class KhochocDatabaser{
   }
 
   Future<void> justSubmitNow(int coinsGot) async{
-    submitScoreManual(coinsGot, DateTime.now().toString());
+    var dateIsNow = DateTime.now();
+    getUserID();
+    submitScoreManual(coinsGot, dateIsNow.toString());
+    DatabaseService(uid: userID).addKhochocHighscores(coinsGot, dateIsNow);
   }
 
   Future<void> closeDatabase() async{

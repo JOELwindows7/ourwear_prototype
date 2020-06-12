@@ -24,68 +24,36 @@ class _TransactionOrderListState extends State<TransactionOrderList> {
               indicatorColor: Colors.greenAccent,
               tabs: <Widget>[
                 Tab(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.all_inclusive),
-                      Text('Semua'),
-                    ],
-                  ),
+                  icon: Icon(Icons.all_inclusive),
+                  child: Text('Semua'),
                 ),
                 Tab(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.money_off),
-                      Text('Belum Bayar'),
-                    ],
-                  ),
+                  icon: Icon(Icons.money_off),
+                  child: Text('Belum Bayar'),
                 ),
                 Tab(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.inbox),
-                      Text('Dikemas'),
-                    ],
-                  ),
+                  icon: Icon(Icons.inbox),
+                  child: Text('Dikemas'),
                 ),
                 Tab(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.send),
-                      Text('Dikirim'),
-                    ],
-                  ),
+                  icon: Icon(Icons.send),
+                  child: Text('Dikirim'),
                 ),
                 Tab(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.file_download),
-                      Text('Disewa'),
-                    ],
-                  ),
+                  icon: Icon(Icons.file_download),
+                  child: Text('Disewa'),
                 ),
                 Tab(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.keyboard_return),
-                      Text('Pengembalian'),
-                    ],
-                  ),
+                  icon: Icon(Icons.keyboard_return),
+                  child: Text('Pengembalian'),
                 ),
                 Tab(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.check),
-                      Text('Selesai'),
-                    ],
-                  ),
+                  icon: Icon(Icons.check),
+                  child: Text('Selesai'),
                 ),
                 Tab(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.cancel),
-                      Text('Batal'),
-                    ],
-                  ),
+                  icon: Icon(Icons.cancel),
+                  child: Text('Batal'),
                 ),
               ],
             ),

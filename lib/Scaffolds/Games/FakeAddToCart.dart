@@ -26,11 +26,22 @@ class _FakeAddToCartState extends State<FakeAddToCart> {
   void fakelyAddToCart() async{
     try{
       await getUserID();
-      await DatabaseService(uid: userID).updateCartItemData('${Pilih.nextInt(1000000000)}', '1');
+      //await DatabaseService(uid: userID).updateCartItemData('${Pilih.nextInt(1000000000)}', '1', 'rentals/1000000');
+      await DatabaseService(uid: userID).addToCart('${Pilih.nextInt(1000000000)}', 1);
     } catch(e) {
       print(e);
     }
   }
+
+  void fakelyAddTransaction() async {
+    try{
+      await getUserID();
+      await DatabaseService(uid: userID).updateTransactionOrderListData('${Pilih.nextInt(1000000000)}', 1, DateTime.now());
+    } catch(e){
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,10 +55,17 @@ class _FakeAddToCartState extends State<FakeAddToCart> {
           children: <Widget>[
             RaisedButton.icon(
                 onPressed: (){
-
+                  fakelyAddToCart();
                 },
                 icon: Icon(Icons.add_shopping_cart),
-                label: null
+                label: Text('Fakely add to Cart'),
+            ),
+            RaisedButton.icon(
+              onPressed: (){
+                fakelyAddTransaction();
+              },
+              icon: Icon(Icons.payment),
+              label: Text('Fakely add transaction'),
             ),
           ],
         ),

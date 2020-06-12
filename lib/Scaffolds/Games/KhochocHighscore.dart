@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ourwearprototype/services/database.dart';
 import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'helpers/KhochocHelper.dart';
@@ -10,6 +13,12 @@ import 'helpers/KhochocHelper.dart';
 https://api.flutter.dev/flutter/dart-core/DateTime-class.html
 http://zetcode.com/db/sqlite/select/
 */
+
+class KhochocOnlineLogg{
+  final int khochocNumbers;
+  final Timestamp dateTime;
+  KhochocOnlineLogg({this.khochocNumbers, this.dateTime});
+}
 
 class KhochocLogs{
   int id;
@@ -51,6 +60,68 @@ class KhochocLogs{
     return 'Khochoc = $khochocNumbers, Date = $date';
   }
 }
+
+class KhochocOnlineListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<List<KhochocOnlineLogg>>.value(
+        value: DatabaseService().khochocs,
+      child: KhochocOnlineListBuilder(),
+    );
+  }
+}
+
+
+class KhochocOnlineTile extends StatelessWidget {
+  final KhochocOnlineLogg khochocOnliner;
+  KhochocOnlineTile({this.khochocOnliner});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2.0,
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: Colors.red,
+          child: Icon(Icons.vibration),
+        ),
+        title: Text('${khochocOnliner.khochocNumbers}'),
+        subtitle: Text('${khochocOnliner.dateTime.toDate()}'),
+        trailing: GestureDetector(
+          child: Icon(Icons.hourglass_empty),
+          onTap: () {
+
+          },
+        ),
+        onTap: () async {
+
+        },
+      ),
+    );
+  }
+}
+
+class KhochocOnlineListBuilder extends StatefulWidget {
+  @override
+  _KhochocOnlineListBuilderState createState() => _KhochocOnlineListBuilderState();
+}
+
+class _KhochocOnlineListBuilderState extends State<KhochocOnlineListBuilder> {
+  @override
+  Widget build(BuildContext context) {
+    final khochocOnlines = Provider.of<List<KhochocOnlineLogg>>(context) ?? [];
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: khochocOnlines.length,
+      itemBuilder: (BuildContext context, int index) {
+        return KhochocOnlineTile(khochocOnliner: khochocOnlines[index],);
+      },
+    );
+  }
+}
+
+
 
 class KhochocHighScore extends StatefulWidget {
   @override
@@ -116,17 +187,43 @@ class _KhochocHighScoreState extends State<KhochocHighScore> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Best Penghochocs'),
-      ),
-      body: createKhochocListView(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.hourglass_empty),
-        tooltip: 'I don\'t know',
-        onPressed: () async {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Best Penghochocs'),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(60.0),
+            child: TabBar(
+              isScrollable: true,
+              unselectedLabelColor: Colors.blueGrey,
+              indicatorColor: Colors.greenAccent,
+              tabs: <Widget>[
+                Tab(
+                  icon: Icon(Icons.wifi_tethering),
+                  child: Text('Online'),
+                ),
+                Tab(
+                  icon: Icon(Icons.disc_full),
+                  child: Text('Local'),
+                )
+              ],
+            ),
+          ),
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            KhochocOnlineListView(),
+            createKhochocListView(),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.hourglass_empty),
+          tooltip: 'I don\'t know',
+          onPressed: () async {
 
-        },
+          },
+        ),
       ),
     );
   }
