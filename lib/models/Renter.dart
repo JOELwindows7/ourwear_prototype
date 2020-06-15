@@ -1,11 +1,11 @@
 class Wearer{
 
   final String uid;
-  final String nama;
+  final String name;
   final String phone;
   final String address;
 
-  Wearer({this.uid,this.nama,this.phone, this.address});
+  Wearer({this.uid,this.name,this.phone, this.address});
 }
 
 class Rental {

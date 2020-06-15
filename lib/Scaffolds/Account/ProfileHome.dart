@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ourwearprototype/Scaffolds/Prosotipe/MyRentals.dart';
 import 'package:ourwearprototype/Scaffolds/Prosotipe/TransactionOrderList.dart';
 import 'package:ourwearprototype/services/auth.dart';
+import 'package:ourwearprototype/shared/spareparts/UserIdText.dart';
+import 'package:ourwearprototype/shared/spareparts/WearerDetail.dart';
 
 class ProfileHome extends StatelessWidget {
 
@@ -57,7 +59,9 @@ class ProfileHome extends StatelessWidget {
                   Text('Keluar'),
                 ],
               ),
-            )
+            ),
+            UserIdText(),
+            WearerDetailContains(),
           ],
         ),
       ),

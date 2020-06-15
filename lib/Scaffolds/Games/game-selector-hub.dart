@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/Scaffolds/Games/AnotherPageIndicatorDemo.dart';
 import 'package:ourwearprototype/Scaffolds/Games/AttemptToCheckout.dart';
+import 'package:ourwearprototype/Scaffolds/Games/CartScreen.dart';
 import 'package:ourwearprototype/Scaffolds/Games/FakeAddToCart.dart';
 import 'package:ourwearprototype/Scaffolds/Games/JustLookRentalLists.dart';
 import 'package:ourwearprototype/Scaffolds/Games/LoadingTest.dart';
@@ -11,6 +12,7 @@ import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/PageViewDem
 import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/StepPageIndicator.dart';
 import 'package:ourwearprototype/Scaffolds/Games/PagedSwipe/PagedSwipeMother.dart';
 import 'package:ourwearprototype/Scaffolds/Games/TabPageView.dart';
+import 'package:ourwearprototype/Scaffolds/Games/WearerLists.dart';
 import 'package:ourwearprototype/shared/loading.dart';
 
 import 'ContainsScaffold.dart';
@@ -85,6 +87,8 @@ class _GameListState extends State<GameList> {
     DaftarGame(Icons.nature, 'Rental List'),
     DaftarGame(Icons.add_shopping_cart, 'Fakely Add to shopping cart'),
     DaftarGame(Icons.credit_card, 'Attempt to checkout'),
+    DaftarGame(Icons.shopping_cart, 'New Attempt Cart Screen'),
+    DaftarGame(Icons.people, 'Wearers In Here'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -154,6 +158,12 @@ class _GameListState extends State<GameList> {
                     break;
                   case 18:
                     return AttemptToCheckout();
+                    break;
+                  case 19:
+                    return CartScreen();
+                    break;
+                  case 20:
+                    return WearerListsOfIt();
                     break;
                   default:
                     return NotFoundError();

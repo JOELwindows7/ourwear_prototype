@@ -139,9 +139,21 @@ class DatabaseService {
   List<CartItem> _cartItemDataFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((e){
       return CartItem(
-        itemUid: e.data['itemId'] ?? '<itemID>',
-        itemName: e.data['nama'] ?? '<ItemName>',
-        rentalReference: e.data['rentalReference'] ?? 'Rental()',
+        itemUid: e.data['itemId'] ?? 0,
+        itemName: '<ItemName>',
+        quantity: e.data['quantity'] ?? 1,
+        //rentalReference: e.data['rentalReference'] ?? 'Rental()',
+      );
+    }).toList();
+  }
+
+  List<Wearer> _wearersAllFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((e) {
+      return Wearer(
+        uid: e.documentID,
+        name: e.data['name'] ?? 'a',
+        phone: e.data['phone'] ?? 'b',
+        address: e.data['address'] ?? 'c',
       );
     }).toList();
   }
@@ -159,9 +171,9 @@ class DatabaseService {
   Wearer _wearerDataFromSnapshot(DocumentSnapshot snapshot){
     return Wearer(
       uid: uid,
-      nama: snapshot.data['nama'],
-      phone: snapshot.data['phone'],
-      address: snapshot.data['address'],
+      name: snapshot.data['name'] ?? 'a',
+      phone: snapshot.data['phone'] ?? 'b',
+      address: snapshot.data['address'] ?? 'c',
     );
   }
 
@@ -192,6 +204,12 @@ class DatabaseService {
   Stream<Wearer> get wearerData{
     return wearerCollection.document(uid).snapshots()
         .map(_wearerDataFromSnapshot);
+  }
+
+  Stream<List<Wearer>> get wearersLists{
+    return wearerCollection.snapshots()
+        .map(_wearersAllFromSnapshot);
+
   }
 
   Stream<List<CartItem>> get cartItemsData{

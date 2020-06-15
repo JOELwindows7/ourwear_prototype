@@ -17,7 +17,7 @@ class _TransactionOrderListState extends State<TransactionOrderList> {
         appBar: AppBar(
           title: Text('Pesanan Saya'),
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(30.0),
+            preferredSize: Size.fromHeight(90.0),
             child: TabBar(
               isScrollable: true,
               unselectedLabelColor: Colors.blueGrey,
