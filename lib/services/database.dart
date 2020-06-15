@@ -92,8 +92,15 @@ class DatabaseService {
     });
   }
 
-  Future importTransactions(){
-
+  Future addTransactionOrderListData(String itemId, int quantity, DateTime orderedAt) async {
+    //TODO: query rental list, get the item refered by ID
+    var tempQuantity = quantity;
+    return await wearerCollection.document(uid).collection('TransactionOrderList').add({
+      'cartId' : itemId,
+      'rentalReference' : rentalCollection.reference().document(itemId),
+      'quantity' : tempQuantity,
+      'orderedAt' : orderedAt,
+    });
   }
 
   // brew list from snapshot
