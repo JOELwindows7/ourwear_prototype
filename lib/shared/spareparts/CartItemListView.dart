@@ -25,6 +25,7 @@ class _CartItemListViewState extends State<CartItemListView> {
     FirebaseUser user = await _auth.currentUser();
     String id = user.uid;
     userID = id;
+    print('UserID = ($userID)');
   }
 
   @override
@@ -38,12 +39,14 @@ class _CartItemListViewState extends State<CartItemListView> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return StreamBuilder<List<CartItem>>(
-      stream: DatabaseService(uid: user.uid).cartItemsData,
+      stream: DatabaseService(uid: userID).cartItemsData,
       builder: (context, snapshot){
         //Wearer wearer = snapshot.data;
         List<CartItem> cartItems = snapshot.data;
+        print('cart items = $cartItems');
         if(snapshot.hasData){
           return ListView.builder(
+            itemCount: cartItems.length,
               itemBuilder: (context, index){
                 return CartItemTile(
                   cartItem: cartItems[index],
@@ -70,6 +73,17 @@ class CartItemRebros extends StatelessWidget {
     );
   }
 }
+
+class CartAhItDoesntWork extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<User>.value(
+        value: AuthService().user,
+      child: CartItemListView(),
+    );
+  }
+}
+
 
 
 class CartItemTile extends StatelessWidget {

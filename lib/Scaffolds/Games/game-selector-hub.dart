@@ -14,6 +14,7 @@ import 'package:ourwearprototype/Scaffolds/Games/PagedSwipe/PagedSwipeMother.dar
 import 'package:ourwearprototype/Scaffolds/Games/TabPageView.dart';
 import 'package:ourwearprototype/Scaffolds/Games/WearerLists.dart';
 import 'package:ourwearprototype/shared/loading.dart';
+import 'package:ourwearprototype/shared/spareparts/CartItemListView.dart';
 
 import 'ContainsScaffold.dart';
 import 'Khochoc.dart';
@@ -161,6 +162,7 @@ class _GameListState extends State<GameList> {
                     break;
                   case 19:
                     return CartScreen();
+                    //return CartAhItDoesntWork();
                     break;
                   case 20:
                     return WearerListsOfIt();

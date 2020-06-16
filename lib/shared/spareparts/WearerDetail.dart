@@ -19,15 +19,24 @@ class _WearerDetailContainsState extends State<WearerDetailContains> {
       builder: (context, snapshot){
         if(snapshot.hasData){
           Wearer wearerData = snapshot.data;
-          return Column(
-            children: <Widget>[
-              Text('Nama : ${wearerData.name}'),
-              //Text('Alamat: ${wearerData.address}'),
-              //Text('Tel: ${wearerData.phone}'),  //Privacy streaming warning!
-            ],
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 50.0,
+              child: Column(
+                children: <Widget>[
+                  Text('Nama : ${wearerData.name}'),
+                  //Text('Alamat: ${wearerData.address}'),
+                  //Text('Tel: ${wearerData.phone}'),  //Privacy streaming warning!
+                ],
+              ),
+            ),
           );
         } else {
-          return Loading();
+          return Container(
+            height: 30.0,
+              child: Loading()
+          );
         }
       },
     );
