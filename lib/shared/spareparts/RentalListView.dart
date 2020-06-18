@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ourwearprototype/Scaffolds/Prosotipe/MakeshiftItemView.dart';
 import 'package:ourwearprototype/models/Renter.dart';
 import 'package:ourwearprototype/services/auth.dart';
 import 'package:ourwearprototype/services/database.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
 
 //https://medium.com/flutter-community/firebase-startup-logic-and-custom-user-profiles-6309562ea8b7
 // https://stackoverflow.com/q/50252569/9079640
@@ -48,7 +50,14 @@ class RentalTile extends StatelessWidget {
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
           onTap: (){
-
+            Navigator.push(context,
+                MaterialPageRoute(
+                    builder: (context){
+                      print('Open Rental of ${rental.uid} which is ${rental.nama}');
+                      return MakeshiftItemView(itemID: rental.uid,itemName: rental.nama,);
+                    }
+                ),
+            );
           },
           leading: CircleAvatar(
             radius: 25.0,

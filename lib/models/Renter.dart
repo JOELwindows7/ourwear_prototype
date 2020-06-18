@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class Wearer{
 
   final String uid;
@@ -14,7 +16,7 @@ class Rental {
   final String userId; //who has that item
   final String imager;
   final String nama;
-  final String price;
+  final num price;
   final String descriptions;
   final int timeBorrowDay;
   final bool available;
@@ -33,10 +35,15 @@ class Cart{
 class CartItem{
   final itemUid;
   final quantity;
+  final userId; //who has that item
+  final imager;
+  final price;
+  final descriptions;
+  final int timeBorrowDay;
   final itemName;
   final rentalReference;
 
-  CartItem({this.itemUid, this.quantity, this.itemName, this.rentalReference});
+  CartItem({this.itemUid, this.quantity, this.itemName, this.rentalReference, this.timeBorrowDay, this.descriptions, this.price, this.imager, this.userId});
 }
 
 class TransactionOrders{

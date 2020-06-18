@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/models/user.dart';
 import 'package:ourwearprototype/services/auth.dart';
+import 'package:ourwearprototype/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class UserIdText extends StatefulWidget {
@@ -22,7 +23,11 @@ class UserIdTextTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userId = Provider.of<User>(context);
-    return Text('${userId.uid}');
+    if (userId != null) {
+      return Text('${userId.uid ?? 'Pls wait'}');
+    } else {
+      return Loading();
+    }
   }
 }
 

@@ -75,8 +75,30 @@ class DatabaseService {
     });
   }
 
-  Future addToCart(String itemId, int quantity) async{
-    await updateCartItemData(itemId, quantity, 'rental/$itemId');
+  Future updateCartItemDataMore({String itemName, String itemId, int quantity, String rentalReferencePath}) async {
+    //TODO: query rental list, get the item refered by ID
+    var tempQuantity = quantity;
+    return await wearerCollection.document(uid).collection('cartItems').document(itemId).setData({
+      'itemName' : itemName,
+      'itemId' : itemId,
+      'quantity' : tempQuantity,
+      'rentalReference' : rentalCollection.reference().document(itemId),
+    });
+  }
+
+  Future touchCartItemData(String itemId) async{
+    return await updateCartItemData(itemId, 0, itemId);
+  }
+
+  Future addToCart({String itemId, String itemName, int quantity}) async{
+   // await touchCartItemData(itemId);
+    await updateCartItemDataMore(
+        itemName: itemName,
+        itemId: itemId,
+        quantity: quantity,
+        rentalReferencePath: 'rental/$itemId',
+    );
+    //TODO separate container of mini stream builder of queryable rental.
   }
   // https://stackoverflow.com/questions/46568850/what-is-firestore-reference-data-type-good-for
   // https://firebase.google.com/docs/firestore/manage-data/add-data
@@ -126,6 +148,7 @@ class DatabaseService {
   List<Rental> _rentalListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((e) {
       return Rental(
+        uid: e.documentID,
         nama: e.data['nama'] ?? '<an item>',
         userId: e.data['userId'] ?? '<item owner>',
         imager: e.data['imager'] ?? 'Re',
@@ -140,7 +163,7 @@ class DatabaseService {
     return snapshot.documents.map((e){
       return CartItem(
         itemUid: e.data['itemId'] ?? 0,
-        itemName: '<ItemName>',
+        itemName: e.data['itemName'] ?? '<itemName>',
         quantity: e.data['quantity'] ?? 1,
         //rentalReference: e.data['rentalReference'] ?? 'Rental()',
       );
@@ -156,6 +179,19 @@ class DatabaseService {
         address: e.data['address'] ?? 'c',
       );
     }).toList();
+  }
+
+  Rental _particularRentalDataFromSnapshot(DocumentSnapshot snapshot){
+    return Rental(
+      uid: uid,
+      nama: snapshot.data['nama'],
+      timeBorrowDay: snapshot.data['timeBorrowDay'],
+      userId: snapshot.data['userID'],
+      descriptions: snapshot.data['descriptions'],
+      price: snapshot.data['price'],
+      available: snapshot.data['available'],
+      imager: snapshot.data['imager'],
+    );
   }
 
   // userData from snapshot
@@ -201,6 +237,11 @@ class DatabaseService {
       .map(_userDataFromSnapshot);
   }
 
+  Stream<Rental> get particularRentalData{
+    return rentalCollection.document(uid).snapshots()
+        .map(_particularRentalDataFromSnapshot);
+  }
+
   Stream<Wearer> get wearerData{
     return wearerCollection.document(uid).snapshots()
         .map(_wearerDataFromSnapshot);
@@ -209,7 +250,6 @@ class DatabaseService {
   Stream<List<Wearer>> get wearersLists{
     return wearerCollection.snapshots()
         .map(_wearersAllFromSnapshot);
-
   }
 
   Stream<List<CartItem>> get cartItemsData{

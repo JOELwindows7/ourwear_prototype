@@ -17,7 +17,7 @@ class _WearerDetailContainsState extends State<WearerDetailContains> {
     return StreamBuilder<Wearer>(
       stream: DatabaseService(uid: user.uid).wearerData,
       builder: (context, snapshot){
-        if(snapshot.hasData){
+        if(snapshot.hasData && snapshot.data.uid != null){
           Wearer wearerData = snapshot.data;
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -25,7 +25,7 @@ class _WearerDetailContainsState extends State<WearerDetailContains> {
               height: 50.0,
               child: Column(
                 children: <Widget>[
-                  Text('Nama : ${wearerData.name}'),
+                  Text('Nama : ${wearerData.name ?? 'pls wait'}'),
                   //Text('Alamat: ${wearerData.address}'),
                   //Text('Tel: ${wearerData.phone}'),  //Privacy streaming warning!
                 ],

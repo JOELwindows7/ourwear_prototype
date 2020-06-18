@@ -27,7 +27,7 @@ class _FakeAddToCartState extends State<FakeAddToCart> {
     try{
       await getUserID();
       //await DatabaseService(uid: userID).updateCartItemData('${Pilih.nextInt(1000000000)}', '1', 'rentals/1000000');
-      await DatabaseService(uid: userID).addToCart('${Pilih.nextInt(1000000000)}', 1);
+      await DatabaseService(uid: userID).addToCart(itemName: 'FAKE-ITEM-TEST', itemId: '${Pilih.nextInt(1000000000)}', quantity: 1);
     } catch(e) {
       print(e);
     }

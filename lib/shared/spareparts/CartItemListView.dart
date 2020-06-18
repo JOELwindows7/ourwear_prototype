@@ -25,7 +25,6 @@ class _CartItemListViewState extends State<CartItemListView> {
     FirebaseUser user = await _auth.currentUser();
     String id = user.uid;
     userID = id;
-    print('UserID = ($userID)');
   }
 
   @override
@@ -103,7 +102,7 @@ class CartItemTile extends StatelessWidget {
           leading: CircleAvatar(
             radius: 25.0,
             backgroundColor: Colors.blue,
-            child: Text('Re'),
+            child: Text('ReCa'),
           ),
           title: Text(cartItem.itemName ?? 'An Item'),
           subtitle: Text('aaa'),
