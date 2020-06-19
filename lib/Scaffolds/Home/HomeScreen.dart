@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/Scaffolds/Account/AccountScreen.dart';
 import 'package:ourwearprototype/Scaffolds/Account/AccountScreenLess.dart';
+import 'package:ourwearprototype/Scaffolds/Games/CartScreen.dart';
 import 'package:ourwearprototype/Scaffolds/Games/game-selector-hub.dart';
 import 'package:ourwearprototype/Scaffolds/Home/FrontPageTemp.dart';
 import 'package:ourwearprototype/Scaffolds/Prosotipe/CartProsotipe.dart';
@@ -22,7 +23,7 @@ class HomeScreen extends StatelessWidget {
                 onPressed: (){
                   Navigator.push(context,
                       MaterialPageRoute(
-                        builder: (context)=> CartProsotipe(),
+                        builder: (context)=> CartScreen(),
                       ),
                   );
                 },

@@ -36,7 +36,7 @@ class DatabaseService {
     });
   }
 
-  Future updateRentalData(String name, String userId, String price, String descriptions, int timeBorrowDay, String imager) async {
+  Future updateRentalData({String name, String userId, num price, String descriptions, int timeBorrowDay, String imager}) async {
     return await rentalCollection.document(uid).setData({
       'imager' : imager,
       'nama' : name,
@@ -47,7 +47,7 @@ class DatabaseService {
     });
   }
 
-  Future addRentalData(String name, String userId, String price, String descriptions, int timeBorrowDay, String imager) async {
+  Future addRentalData({String name, String userId, num price, String descriptions, int timeBorrowDay, String imager}) async {
     return await rentalCollection.add({
       'imager' : imager,
       'nama' : name,
@@ -56,7 +56,7 @@ class DatabaseService {
       'descriptions' : descriptions,
       'timeBorrowDay' : timeBorrowDay,
     });
-  }
+}
 
   Future addKhochocHighscores(int khochocNumbers, DateTime date) async{
     return await khochocCollection.add({
@@ -86,6 +86,10 @@ class DatabaseService {
     });
   }
 
+  Future deleteCartItemData({@required String itemID}) async{
+    return await wearerCollection.document(uid).collection('cartItems').document(itemID).delete();
+  }
+
   Future touchCartItemData(String itemId) async{
     return await updateCartItemData(itemId, 0, itemId);
   }
@@ -102,6 +106,9 @@ class DatabaseService {
   }
   // https://stackoverflow.com/questions/46568850/what-is-firestore-reference-data-type-good-for
   // https://firebase.google.com/docs/firestore/manage-data/add-data
+  // https://stackoverflow.com/questions/53994972/flutter-remove-a-firebase-document-ontap
+
+
 
   Future updateTransactionOrderListData(String itemId, int quantity, DateTime orderedAt) async {
     //TODO: query rental list, get the item refered by ID
@@ -186,7 +193,7 @@ class DatabaseService {
       uid: uid,
       nama: snapshot.data['nama'],
       timeBorrowDay: snapshot.data['timeBorrowDay'],
-      userId: snapshot.data['userID'],
+      userId: snapshot.data['userId'] ?? '<entahlah>',
       descriptions: snapshot.data['descriptions'],
       price: snapshot.data['price'],
       available: snapshot.data['available'],
@@ -210,6 +217,15 @@ class DatabaseService {
       name: snapshot.data['name'] ?? 'a',
       phone: snapshot.data['phone'] ?? 'b',
       address: snapshot.data['address'] ?? 'c',
+    );
+  }
+
+  CartItem _particularCartItemFromSnapshot(DocumentSnapshot snapshot){
+    return CartItem(
+      itemUid: snapshot.data['itemId'] ?? 0,
+      itemName: snapshot.data['itemName'] ?? '<itemName>',
+      quantity: snapshot.data['quantity'] ?? 1,
+      //rentalReference: e.data['rentalReference'] ?? 'Rental()',
     );
   }
 

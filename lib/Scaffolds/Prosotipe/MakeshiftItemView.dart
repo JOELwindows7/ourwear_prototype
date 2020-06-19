@@ -10,6 +10,7 @@ import 'package:ourwearprototype/models/Renter.dart';
 import 'package:ourwearprototype/services/auth.dart';
 import 'package:ourwearprototype/services/database.dart';
 import 'package:ourwearprototype/shared/loading.dart';
+import 'package:ourwearprototype/shared/spareparts/RentalItemQueryMiniWindows.dart';
 
 class MakeshiftItemView extends StatefulWidget {
   final itemID;
@@ -132,6 +133,12 @@ class _InsideItemViewState extends State<InsideItemView> {
                 Text('${item.imager}'), // Query image url, if not found, appears the text
                 Text('${item.nama}'),
                 Text('${item.price} untuk ${item.timeBorrowDay} hari'), //TODO implement negotiatable boolean
+                Row(
+                  children: <Widget>[
+                    Text('Milik '),
+                    SiapaUserIDThis(uid: item.userId,),
+                  ],
+                ),
               ],
             ),
           );

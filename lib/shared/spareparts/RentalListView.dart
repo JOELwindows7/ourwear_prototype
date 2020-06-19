@@ -4,6 +4,7 @@ import 'package:ourwearprototype/Scaffolds/Prosotipe/MakeshiftItemView.dart';
 import 'package:ourwearprototype/models/Renter.dart';
 import 'package:ourwearprototype/services/auth.dart';
 import 'package:ourwearprototype/services/database.dart';
+import 'package:ourwearprototype/shared/spareparts/RentalItemQueryMiniWindows.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 
@@ -65,7 +66,7 @@ class RentalTile extends StatelessWidget {
             child: Text(rental.imager ?? 'Re'),
           ),
           title: Text(rental.nama ?? 'An Item'),
-          subtitle: Text('${rental.userId}, ${rental.price ?? 'Price'} untuk ${rental.timeBorrowDay} hari'),
+          subtitle: RentalParticularDetail(itemID: rental.uid,),
         ),
       ),
     );
@@ -93,4 +94,8 @@ class _RentalListBuilderState extends State<RentalListBuilder> {
   }
 }
 
+/*
+scrap
 
+Text('${rental.userId}, ${rental.price ?? 'Price'} untuk ${rental.timeBorrowDay} hari'),
+ */

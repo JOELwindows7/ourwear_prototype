@@ -32,7 +32,14 @@ class _JustLookRentalListsState extends State<JustLookRentalLists> {
     try{
       //var user = Provider.of<User>(context, listen: false);
       await getUserID();
-      await DatabaseService(uid: '${Pilih.nextInt(1000000000)}').updateRentalData('name', '$userID', '100000', 'descriptions', 5, '🤣');
+      await DatabaseService().addRentalData(
+          name: 'nameFaek',
+          userId: '$userID',
+          price: 100000,
+          descriptions: 'descriptions',
+          timeBorrowDay: 5,
+          imager: '🤣'
+      );
     } catch(e){
       print(e);
     }
