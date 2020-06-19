@@ -93,6 +93,9 @@ class _CartItemListViewState extends State<CartItemListView> {
       print('AAAAAAAAAAAAAAAA Undo Disablement = $undoDisabled');
   }
 
+  //https://medium.com/flutter-community/firestore-crud-in-flutter-a-complete-guide-67755a8afc43
+  // https://www.youtube.com/watch?v=1PhAPWzGaM4&list=PLdTodMosi-Bzj6RIC2wGIkAxKtXPxDtca&index=4&t=0s
+
   var userID;
   Future getUserID() async{
     FirebaseUser user = await _auth.currentUser();
@@ -241,5 +244,11 @@ class _CartItemListBuilderState extends State<CartItemListBuilder> {
     );
   }
 }
+
+/*
+https://youtu.be/Be9UH1kXFDw
+https://youtu.be/RkSqPAn9szs
+https://youtu.be/R9C5KMJKluE
+ */
 
 
