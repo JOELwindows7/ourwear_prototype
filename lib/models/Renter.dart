@@ -33,6 +33,7 @@ class Cart{
 }
 
 class CartItem{
+  final checkoutThis;
   final itemUid;
   final quantity;
   final userId; //who has that item
@@ -43,7 +44,7 @@ class CartItem{
   final itemName;
   final rentalReference;
 
-  CartItem({this.itemUid, this.quantity, this.itemName, this.rentalReference, this.timeBorrowDay, this.descriptions, this.price, this.imager, this.userId});
+  CartItem({this.checkoutThis,this.itemUid, this.quantity, this.itemName, this.rentalReference, this.timeBorrowDay, this.descriptions, this.price, this.imager, this.userId});
 }
 
 class TransactionOrders{
@@ -51,6 +52,17 @@ class TransactionOrders{
   final String cartUid;
   final String nama;
   final DateTime orderedAt;
+  final int statusRightNow;
+  /*
+  0 = Just Checked out, item start prepare
+  1 = itemPacked! going to Courier
+  3 = Courier get! now is going to send
+  4 = sending right now!
+  5 = arrive at target! now enjoying
+  6 = it's time to return! Courier is waiting
+  7 = being sent back
+  8 = item arrived back to owner
+   */
 
-  TransactionOrders({this.uid,this.cartUid,this.nama,this.orderedAt});
+  TransactionOrders({this.uid,this.cartUid,this.nama,this.orderedAt, this.statusRightNow});
 }

@@ -158,7 +158,7 @@ class _GameListState extends State<GameList> {
                     return FakeAddToCart();
                     break;
                   case 18:
-                    return AttemptToCheckout();
+                    return CheckoutDoesNotWork();
                     break;
                   case 19:
                     return CartScreen();

@@ -75,7 +75,7 @@ class DatabaseService {
     });
   }
 
-  Future updateCartItemDataMore({String itemName, String itemId, int quantity, String rentalReferencePath}) async {
+  Future updateCartItemDataMore({bool checkoutThis, String itemName, String itemId, int quantity, String rentalReferencePath}) async {
     //TODO: query rental list, get the item refered by ID
     var tempQuantity = quantity;
     return await wearerCollection.document(uid).collection('cartItems').document(itemId).setData({
@@ -83,6 +83,7 @@ class DatabaseService {
       'itemId' : itemId,
       'quantity' : tempQuantity,
       'rentalReference' : rentalCollection.reference().document(itemId),
+      'checkOutThis' : checkoutThis,
     });
   }
 
@@ -101,8 +102,16 @@ class DatabaseService {
         itemId: itemId,
         quantity: quantity,
         rentalReferencePath: 'rental/$itemId',
+        checkoutThis: true,
     );
     //TODO separate container of mini stream builder of queryable rental.
+  }
+
+  Future checkOutThisYesNo({String itemId, bool whichValue}) async {
+    await updateCartItemDataMore(
+      itemId: itemId,
+      checkoutThis: whichValue,
+    );
   }
   // https://stackoverflow.com/questions/46568850/what-is-firestore-reference-data-type-good-for
   // https://firebase.google.com/docs/firestore/manage-data/add-data
@@ -172,6 +181,7 @@ class DatabaseService {
         itemUid: e.data['itemId'] ?? 0,
         itemName: e.data['itemName'] ?? '<itemName>',
         quantity: e.data['quantity'] ?? 1,
+        checkoutThis: e.data['checkOutThis'] ?? true,
         //rentalReference: e.data['rentalReference'] ?? 'Rental()',
       );
     }).toList();
@@ -225,6 +235,7 @@ class DatabaseService {
       itemUid: snapshot.data['itemId'] ?? 0,
       itemName: snapshot.data['itemName'] ?? '<itemName>',
       quantity: snapshot.data['quantity'] ?? 1,
+      checkoutThis: snapshot.data['checkOutThis'] ?? true,
       //rentalReference: e.data['rentalReference'] ?? 'Rental()',
     );
   }

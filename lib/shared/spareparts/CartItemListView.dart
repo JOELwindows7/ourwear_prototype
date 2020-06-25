@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/Scaffolds/Prosotipe/CartProsotipe.dart';
 import 'package:ourwearprototype/models/Renter.dart';
@@ -124,12 +125,14 @@ class _CartItemListViewState extends State<CartItemListView> {
         print('cart items = $cartItems');
         if(snapshot.hasData){
           return ListView.builder(
+            shrinkWrap: true,
             itemCount: cartItems.length,
               itemBuilder: (context, index){
                 return Dismissible(
                   key: ValueKey(cartItems[index].itemUid),
                   child: CartItemTile(
                     cartItem: cartItems[index],
+                    checkOutThisOne: cartItems[index].checkoutThis,
                   ),
                   onDismissed: (direction) async{
                     print("Remove $index which is ${cartItems[index].itemName}");
@@ -198,9 +201,40 @@ class CartAhItDoesntWork extends StatelessWidget {
 
 
 
-class CartItemTile extends StatelessWidget {
+class CartItemTile extends StatefulWidget {
   final CartItem cartItem;
-  CartItemTile({this.cartItem});
+  final bool checkOutThisOne;
+  CartItemTile({this.cartItem, this.checkOutThisOne});
+
+
+  @override
+  _CartItemTileState createState() => _CartItemTileState(cartItem: cartItem, checkOutThisOne: checkOutThisOne);
+}
+
+class _CartItemTileState extends State<CartItemTile> {
+  final CartItem cartItem;
+  final bool checkOutThisOne;
+  bool _isCheckout = true;
+  _CartItemTileState({this.cartItem, this.checkOutThisOne});
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  var userID;
+
+  Future getUserID() async{
+    FirebaseUser user = await _auth.currentUser();
+    String id = user.uid;
+    userID = id;
+  }
+
+
+
+  @override
+  void initState() {
+    _isCheckout = checkOutThisOne;
+    getUserID();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -212,13 +246,28 @@ class CartItemTile extends StatelessWidget {
           onTap: (){
 
           },
-          leading: CircleAvatar(
-            radius: 25.0,
-            backgroundColor: Colors.blue,
-            child: Text('ReCa'),
+          leading: Checkbox(
+            onChanged: (value){
+              getUserID();
+              setState(() {
+                _isCheckout = value;
+                DatabaseService(uid: userID).checkOutThisYesNo(itemId: cartItem.itemUid, whichValue: _isCheckout);
+              });
+            },
+            value: _isCheckout,
           ),
-          title: RentalParticularName(itemID: cartItem.itemUid,),
-          subtitle: RentalParticularDetail(itemID: cartItem.itemUid,),
+//          onChanged: (anValue){
+//            print("Change Checkout to $anValue");
+//            getUserID();
+//            setState(() {
+//              DatabaseService(uid: userID).checkOutThisYesNo(itemId: widget.cartItem.itemUid, whichValue: anValue);
+//            });
+//
+//          },
+//          value: cartItem.checkoutThis ?? false,
+//          controlAffinity: ListTileControlAffinity.leading,
+          title: RentalParticularName(itemID: widget.cartItem.itemUid,),
+          subtitle: RentalParticularDetail(itemID: widget.cartItem.itemUid,),
         ),
       ),
     );;
@@ -251,4 +300,11 @@ https://youtu.be/RkSqPAn9szs
 https://youtu.be/R9C5KMJKluE
  */
 
+/*
+CircleAvatar(
+                radius: 25.0,
+                backgroundColor: Colors.blue,
+                child: Text('ReCa'),
+              ),
+ */
 

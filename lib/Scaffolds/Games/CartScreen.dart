@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ourwearprototype/Scaffolds/Games/AttemptToCheckout.dart';
 import 'package:ourwearprototype/Scaffolds/Prosotipe/MakeShiftCheckout.dart';
 import 'package:ourwearprototype/shared/spareparts/CartItemListView.dart';
 import 'package:ourwearprototype/shared/spareparts/RentalListView.dart';
@@ -44,10 +45,10 @@ class _CartScreenState extends State<CartScreen> {
           ),
           FlatButton.icon(
               onPressed: (){
-                Navigator.pop(context);
+                //Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(
-                      builder: (context)=>MakeShiftCheckOut(),
+                      builder: (context)=>CheckoutDoesNotWork(),
                     )
                 );
               },
