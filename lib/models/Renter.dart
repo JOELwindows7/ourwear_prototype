@@ -54,14 +54,15 @@ class TransactionOrders{
   final DateTime orderedAt;
   final int statusRightNow;
   /*
-  0 = Just Checked out, item start prepare
-  1 = itemPacked! going to Courier
-  3 = Courier get! now is going to send
-  4 = sending right now!
-  5 = arrive at target! now enjoying
-  6 = it's time to return! Courier is waiting
-  7 = being sent back
-  8 = item arrived back to owner
+  0 = all of them
+  1 = Just Checked out, Unpaid
+  2 = Packed
+  3 = Sent
+  4 = Rented
+  5 = Return
+  6 = Finish
+  7 = Cancel
+  8 = Lost
    */
 
   TransactionOrders({this.uid,this.cartUid,this.nama,this.orderedAt, this.statusRightNow});

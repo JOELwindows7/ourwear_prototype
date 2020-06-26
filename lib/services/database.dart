@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -187,6 +189,17 @@ class DatabaseService {
     }).toList();
   }
 
+  List<TransactionOrders> _transactionOrdersDataFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((e){
+      return TransactionOrders(
+        cartUid: e.data['cartUid'] ?? '',
+        nama: e.data['nama'] ?? '',
+        orderedAt: e.data['orderedAt'] ?? DateTime.now(),
+
+      );
+    });
+  }
+
   List<Wearer> _wearersAllFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((e) {
       return Wearer(
@@ -256,6 +269,11 @@ class DatabaseService {
   Stream<List<KhochocOnlineLogg>> get khochocs{
     return khochocCollection.snapshots()
         .map(_khochocListFromSnapshot);
+  }
+  
+  Stream<List<TransactionOrders>> get transactionOrderings{
+    return wearerCollection.document(uid).collection('TransactionOrderList').snapshots()
+        .map(_transactionOrdersDataFromSnapshot);
   }
 
   // get user doc stream
