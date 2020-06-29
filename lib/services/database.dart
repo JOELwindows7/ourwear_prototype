@@ -1,4 +1,4 @@
-import 'dart:html';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -140,6 +140,7 @@ class DatabaseService {
       'rentalReference' : rentalCollection.reference().document(itemId),
       'quantity' : tempQuantity,
       'orderedAt' : orderedAt,
+      'statusRightNow' : 1,
     });
   }
 
@@ -192,12 +193,13 @@ class DatabaseService {
   List<TransactionOrders> _transactionOrdersDataFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((e){
       return TransactionOrders(
-        cartUid: e.data['cartUid'] ?? '',
-        nama: e.data['nama'] ?? '',
+        cartUid: e.data['cartId'] ?? '',
+        quantity: e.data['quantity'] ?? 0,
         orderedAt: e.data['orderedAt'] ?? DateTime.now(),
-
+        rentalReference: e.data['rentalReference'] ?? '',
+        statusRightNow: e.data['statusRightNow'] ?? 0,
       );
-    });
+    }).toList();
   }
 
   List<Wearer> _wearersAllFromSnapshot(QuerySnapshot snapshot){
@@ -237,9 +239,9 @@ class DatabaseService {
   Wearer _wearerDataFromSnapshot(DocumentSnapshot snapshot){
     return Wearer(
       uid: uid,
-      name: snapshot.data['name'] ?? 'a',
-      phone: snapshot.data['phone'] ?? 'b',
-      address: snapshot.data['address'] ?? 'c',
+      name: snapshot.data['name'],
+      phone: snapshot.data['phone'],
+      address: snapshot.data['address'],
     );
   }
 

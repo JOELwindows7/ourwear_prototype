@@ -1,4 +1,6 @@
-import 'dart:ffi';
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Wearer{
 
@@ -50,9 +52,13 @@ class CartItem{
 class TransactionOrders{
   final String uid;
   final String cartUid;
-  final String nama;
-  final DateTime orderedAt;
+  final int quantity;
+  final Timestamp orderedAt;
+  final List<Timestamp> moreDates; //TODO: separate in detail of date of when status here it is. when this status was reached?
+  final rentalReference;
   final int statusRightNow;
+  //TODO: payment method string tell
+
   /*
   0 = all of them
   1 = Just Checked out, Unpaid
@@ -65,5 +71,5 @@ class TransactionOrders{
   8 = Lost
    */
 
-  TransactionOrders({this.uid,this.cartUid,this.nama,this.orderedAt, this.statusRightNow});
+  TransactionOrders({this.uid,this.quantity,this.cartUid,this.orderedAt, this.moreDates, this.statusRightNow, this.rentalReference});
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ourwearprototype/models/Renter.dart';
@@ -117,11 +118,23 @@ class _YessAllTransactionsRecentlyState extends State<_YessAllTransactionsRecent
   _YessAllTransactionsRecentlyState({this.scaffoldKey, this.forWhichStatus});
 
   final AnUserID anUserID = AnUserID();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   var userID;
+  Future getUserID() async{
+    FirebaseUser user = await _auth.currentUser();
+    String id = user.uid;
+    userID = id;
+  }
+
+  void wada() async {
+    await getUserID();
+  }
 
   @override
   void initState() {
-    userID = anUserID.whatUserID();
+    //userID = anUserID.whatUserID();
+    //wada();
+    getUserID();
     // TODO: implement initState
     super.initState();
   }
@@ -132,20 +145,52 @@ class _YessAllTransactionsRecentlyState extends State<_YessAllTransactionsRecent
     final user = Provider.of<User>(context);
     return StreamBuilder<List<TransactionOrders>>(
       stream: DatabaseService(uid: userID).transactionOrderings,
-      builder: (context, snapshot){
+      builder: (context, snapshot) {
+        //getUserID();
         List<TransactionOrders> pesanan = snapshot.data;
-        List<TransactionOrders> import;
-        if(forWhichStatus == 0){
-          import = pesanan;
-        } else {
-          for(TransactionOrders andi in pesanan){
-            if(andi.statusRightNow == forWhichStatus){
-              import.add(andi);
-            }
-          }
-        }
+        List<TransactionOrders> import = [];
+
 
         if(snapshot.hasData){
+          print('Pesanan = $pesanan');
+          if(forWhichStatus == 0){
+            try{
+              //print('Import all there are ${pesanan.length}');
+              import = pesanan;
+              print('import has ${import.length}');
+            } catch(e){
+              print('wError $e');
+            }
+          } else {
+            print('Special For Which Status $forWhichStatus');
+            print('Total Unparticular Orders are ${pesanan.length}');
+//            for(TransactionOrders andi in pesanan){
+//              if(andi.statusRightNow == forWhichStatus){
+//                try{
+//                  import.add(andi);
+//                } catch(e){
+//                  print('Weerror $e');
+//                }
+//
+//              }
+//            }
+            for(int i=0; i < pesanan.length; i++){
+              try{
+                print('WOO trye ${pesanan[i].cartUid} the ${pesanan[i].statusRightNow}');
+                if(pesanan[i].statusRightNow == forWhichStatus){
+                  try{
+                    import.add(pesanan[i]);
+                  } catch(e){
+                    print('wereror $e');
+                  }
+                }
+              } catch(e){
+                print('Fatal erwror $e');
+              }
+
+            }
+          }
+
           return ListView.builder(
             shrinkWrap: true,
             itemCount: import.length,
@@ -154,12 +199,26 @@ class _YessAllTransactionsRecentlyState extends State<_YessAllTransactionsRecent
               },
           );
         } else {
+          print('Loading. has $snapshot');
           return Loading();
         }
       },
     );
   }
 }
+
+class TransactionOrdersListBuilder extends StatefulWidget {
+  @override
+  _TransactionOrdersListBuilderState createState() => _TransactionOrdersListBuilderState();
+}
+
+class _TransactionOrdersListBuilderState extends State<TransactionOrdersListBuilder> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 
 class TransactionOrdersTile extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -189,7 +248,13 @@ class _TransactionOrdersTileState extends State<TransactionOrdersTile> {
           },
           leading: Text('T'),
           title: RentalParticularName(itemID: transactionOrders.cartUid,),
-          subtitle: RentalParticularDetail(itemID: transactionOrders.cartUid,),
+          subtitle: Column(
+            children: <Widget>[
+              RentalParticularDetail(itemID: transactionOrders.cartUid,),
+              Text('Dipesan ${transactionOrders.orderedAt.toDate()}'),
+            ],
+          ),
+          isThreeLine: true,
         ),
       ),
     );

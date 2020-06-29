@@ -58,7 +58,7 @@ class _CartItemListViewState extends State<CartItemListView> {
   }
 
   void doThisUndo() async{
-    getUserID();
+    await getUserID();
     await DatabaseService(uid: userID).addToCart(
       itemId: undoStacks.last.thingy.itemUid,
       itemName: undoStacks.last.thingy.itemName,
@@ -110,8 +110,6 @@ class _CartItemListViewState extends State<CartItemListView> {
     getUserID();
     super.initState();
   }
-
-  //TODO swipe to delete item & undo the delete. use dismissible
 
   _CartItemListViewState({this.scaffoldKey, this.setWhichUndoDisable, this.turnOnUndo, this.turnOffUndo});
   @override
