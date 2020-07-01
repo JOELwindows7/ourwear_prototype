@@ -61,6 +61,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   SizedBox(height: 10.0,),
                   TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     decoration: textInputDecoration.copyWith(
                       hintText: 'Email',
                     ),
@@ -99,6 +100,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   SizedBox(height: 20.0,),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     decoration: textInputDecoration.copyWith(
                       hintText: 'Nomor Handphone',
                     ),

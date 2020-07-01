@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 10.0,),
                   TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     decoration: textInputDecoration.copyWith(
                       hintText: 'Email',
                     ),
@@ -75,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: textInputDecoration.copyWith(
                       hintText: 'Kata sandi',
                     ),
-//                    validator: (val) => val.length < 6 ? 'Mohon masukan kata sandi diatas 6 karakter' : null,
+                    // validator: (val) => val.length < 6 ? 'Mohon masukan kata sandi diatas 6 karakter' : null,
                     obscureText: true,
                     onChanged: (val){
                       setState(() {

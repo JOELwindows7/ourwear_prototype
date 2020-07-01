@@ -63,7 +63,7 @@ class RentalTile extends StatelessWidget {
           leading: CircleAvatar(
             radius: 25.0,
             backgroundColor: Colors.black,
-            child: Text(rental.imager ?? 'Re'),
+            child: Image.network(rental.imager) ?? Text(rental.imager ?? 'Re'),
           ),
           title: Text(rental.nama ?? 'An Item'),
           subtitle: RentalParticularDetail(itemID: rental.uid,),
