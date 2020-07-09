@@ -11,6 +11,7 @@ import 'package:ourwearprototype/services/auth.dart';
 import 'package:ourwearprototype/services/database.dart';
 import 'package:ourwearprototype/shared/loading.dart';
 import 'package:ourwearprototype/shared/reusable/AnUserID.dart';
+import 'package:ourwearprototype/shared/spareparts/EditCartData.dart';
 import 'package:ourwearprototype/shared/spareparts/EditRentalParticularly.dart';
 import 'package:ourwearprototype/shared/spareparts/RentalItemQueryMiniWindows.dart';
 
@@ -40,6 +41,22 @@ class _MakeshiftItemViewState extends State<MakeshiftItemView> {
     isMatchWithOwnerUid = true;
   }
 
+  // https://stackoverflow.com/questions/58144948/easiest-way-to-add-3-dot-pop-up-menu-appbar-in-flutter
+  void _showEditCartDataPanel() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 60.0),
+          child: EditCartData(
+            isAddNew: false,
+            itemID: itemID,
+          ),
+        );
+      },
+    );
+  }
+
   final Pilih = Random();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final db = Firestore.instance;
@@ -53,7 +70,7 @@ class _MakeshiftItemViewState extends State<MakeshiftItemView> {
 
   void addThisToCart({itemName, itemID}) async {
     await getUserID();
-    await DatabaseService(uid: userID)
+    await DatabaseService(uid: userID, subID: itemID)
         .addToCart(itemName: itemName, quantity: 1, itemId: itemID);
   }
 
@@ -129,11 +146,16 @@ class _MakeshiftItemViewState extends State<MakeshiftItemView> {
                 itemID: itemID,
                 itemName: itemName,
               );
+              _showEditCartDataPanel();
             },
             icon: Icon(Icons.add_shopping_cart),
             label: Text('Add to Cart')),
         RaisedButton.icon(
             onPressed: () {
+              reallyAddItToCart(
+                itemID: itemID,
+                itemName: itemName,
+              );
               Navigator.pop(context);
               Navigator.push(
                   context,

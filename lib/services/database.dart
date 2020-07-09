@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:ourwearprototype/Scaffolds/Games/KhochocHighscore.dart';
@@ -10,7 +11,8 @@ import 'package:provider/provider.dart';
 
 class DatabaseService {
   final String uid;
-  DatabaseService({this.uid});
+  final String subID;
+  DatabaseService({this.uid, this.subID});
 
   // collection reference
   final CollectionReference brewCollection =
@@ -84,7 +86,13 @@ class DatabaseService {
   }
 
   Future updateCartItemData(
-      String itemId, int quantity, String rentalReferencePath) async {
+    String itemId,
+    int quantity,
+    String rentalReferencePath, {
+    Timestamp borrowFrom,
+    Timestamp borrowTo,
+    bool executeNowOrLater,
+  }) async {
     //TODO: query rental list, get the item refered by ID
     var tempQuantity = quantity;
     return await wearerCollection
@@ -228,6 +236,10 @@ class DatabaseService {
         quantity: e.data['quantity'] ?? 1,
         checkoutThis: e.data['checkOutThis'] ?? true,
         //rentalReference: e.data['rentalReference'] ?? 'Rental()',
+        executeWhen: e.data['executeNowOrLater'] ?? 1, // when to execute
+        borrowFrom: e.data['borrowFrom'] ?? Timestamp.now(), //if specific date
+        borrowTo: e.data['borrowTo'] ?? Timestamp.now(),
+        timeBorrowDay: e.data['timeBorrowDay'] ?? 1, //For how many days
       );
     }).toList();
   }
@@ -295,6 +307,9 @@ class DatabaseService {
       quantity: snapshot.data['quantity'] ?? 1,
       checkoutThis: snapshot.data['checkOutThis'] ?? true,
       //rentalReference: e.data['rentalReference'] ?? 'Rental()',
+      borrowFrom: snapshot.data['borrowFrom'] ?? Timestamp.now(),
+      borrowTo: snapshot.data['borrowTo'] ?? Timestamp.now(),
+      executeWhen: snapshot.data['executeNowOrLater'] ?? 1,
     );
   }
 
@@ -329,6 +344,15 @@ class DatabaseService {
         .document(uid)
         .snapshots()
         .map(_particularRentalDataFromSnapshot);
+  }
+
+  Stream<CartItem> get particularCartItemData {
+    return wearerCollection
+        .document(uid)
+        .collection('cartItems')
+        .document(subID)
+        .snapshots()
+        .map(_particularCartItemFromSnapshot);
   }
 
   Stream<Wearer> get wearerData {

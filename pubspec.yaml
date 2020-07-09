@@ -42,6 +42,8 @@ dependencies:
 
   audioplayers: any
 
+  flutter_spinbox: any
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

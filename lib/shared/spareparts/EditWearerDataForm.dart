@@ -15,11 +15,11 @@ class EditWearerDataForm extends StatefulWidget {
 class _EditWearerDataFormState extends State<EditWearerDataForm> {
   final _formKey = GlobalKey<FormState>();
 
-  //Temp Data
+  //Te
   String _currentName;
   String _currentPhone;
   String _currentAddress;
-  void preFillData({String name, String phone, String address}){
+  FillData({String name, String phone, String address}){
     _currentName = name;
     _currentPhone = phone;
     _currentAddress = address;

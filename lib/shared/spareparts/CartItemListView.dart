@@ -11,14 +11,15 @@ import 'package:ourwearprototype/models/user.dart';
 import 'package:ourwearprototype/services/auth.dart';
 import 'package:ourwearprototype/services/database.dart';
 import 'package:ourwearprototype/shared/loading.dart';
+import 'package:ourwearprototype/shared/spareparts/EditCartData.dart';
 import 'package:ourwearprototype/shared/spareparts/RentalItemQueryMiniWindows.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class OopsStack{
+class OopsStack {
   final int wasIndex;
   final CartItem thingy;
-  OopsStack(this.wasIndex,this.thingy);
+  OopsStack(this.wasIndex, this.thingy);
 }
 
 class CartItemListView extends StatefulWidget {
@@ -26,14 +27,21 @@ class CartItemListView extends StatefulWidget {
   final Function setWhichUndoDisable;
   final Function turnOnUndo;
   final Function turnOffUndo;
-  CartItemListView({this.scaffoldKey, this.setWhichUndoDisable, this.turnOnUndo, this.turnOffUndo});
+  CartItemListView(
+      {this.scaffoldKey,
+      this.setWhichUndoDisable,
+      this.turnOnUndo,
+      this.turnOffUndo});
 
   @override
-  _CartItemListViewState createState() => _CartItemListViewState(scaffoldKey: scaffoldKey, setWhichUndoDisable: setWhichUndoDisable, turnOnUndo: turnOnUndo, turnOffUndo: turnOffUndo);
+  _CartItemListViewState createState() => _CartItemListViewState(
+      scaffoldKey: scaffoldKey,
+      setWhichUndoDisable: setWhichUndoDisable,
+      turnOnUndo: turnOnUndo,
+      turnOffUndo: turnOffUndo);
 }
 
 class _CartItemListViewState extends State<CartItemListView> {
-
   final GlobalKey<ScaffoldState> scaffoldKey;
   final Pilih = Random();
 
@@ -53,11 +61,12 @@ class _CartItemListViewState extends State<CartItemListView> {
   Future playThat() async {
     int result = await audioPlayer.play(patho, isLocal: true);
   }
+
   Future loadThat() async {
     audioPlayer = await AudioCache().play(patho);
   }
 
-  void doThisUndo() async{
+  void doThisUndo() async {
     await getUserID();
     await DatabaseService(uid: userID).addToCart(
       itemId: undoStacks.last.thingy.itemUid,
@@ -66,8 +75,9 @@ class _CartItemListViewState extends State<CartItemListView> {
     );
     undoStacks.removeLast();
   }
+
   // https://stackoverflow.com/questions/49351648/how-do-i-disable-a-button-in-flutter
-  void checkUndoNow(){
+  void checkUndoNow() {
     //scaffoldKey.currentState.removeCurrentSnackBar();
 //    if(undoStacks.isNotEmpty){
 //      getUserID();
@@ -81,24 +91,24 @@ class _CartItemListViewState extends State<CartItemListView> {
 //      });
 //
 //    }
-      setState(() {
-        undoDisabled = undoStacks.isEmpty;
-        //setWhichUndoDisable(undoDisabled);
-        if(undoDisabled){
-          turnOffUndo();
-        } else {
-          turnOnUndo();
-        }
-      });
+    setState(() {
+      undoDisabled = undoStacks.isEmpty;
+      //setWhichUndoDisable(undoDisabled);
+      if (undoDisabled) {
+        turnOffUndo();
+      } else {
+        turnOnUndo();
+      }
+    });
 
-      print('AAAAAAAAAAAAAAAA Undo Disablement = $undoDisabled');
+    print('AAAAAAAAAAAAAAAA Undo Disablement = $undoDisabled');
   }
 
   //https://medium.com/flutter-community/firestore-crud-in-flutter-a-complete-guide-67755a8afc43
   // https://www.youtube.com/watch?v=1PhAPWzGaM4&list=PLdTodMosi-Bzj6RIC2wGIkAxKtXPxDtca&index=4&t=0s
 
   var userID;
-  Future getUserID() async{
+  Future getUserID() async {
     FirebaseUser user = await _auth.currentUser();
     String id = user.uid;
     userID = id;
@@ -111,32 +121,41 @@ class _CartItemListViewState extends State<CartItemListView> {
     super.initState();
   }
 
-  _CartItemListViewState({this.scaffoldKey, this.setWhichUndoDisable, this.turnOnUndo, this.turnOffUndo});
+  _CartItemListViewState(
+      {this.scaffoldKey,
+      this.setWhichUndoDisable,
+      this.turnOnUndo,
+      this.turnOffUndo});
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    //final user = Provider.of<User>(context);
     return StreamBuilder<List<CartItem>>(
       stream: DatabaseService(uid: userID).cartItemsData,
-      builder: (context, snapshot){
+      builder: (context, snapshot) {
         //Wearer wearer = snapshot.data;
         List<CartItem> cartItems = snapshot.data;
-        print('cart items = $cartItems');
-        if(snapshot.hasData){
+        print('cart items s = $cartItems');
+        print('cart of $userID');
+        //List<CartItem> importCartItems = cartItems;
+        if (snapshot.hasData) {
+          print('Loaded $cartItems');
           return ListView.builder(
-            shrinkWrap: true,
-            itemCount: cartItems.length,
-              itemBuilder: (context, index){
+              shrinkWrap: true,
+              itemCount: cartItems.length,
+              itemBuilder: (context, index) {
                 return Dismissible(
                   key: ValueKey(cartItems[index].itemUid),
                   child: CartItemTile(
                     cartItem: cartItems[index],
                     checkOutThisOne: cartItems[index].checkoutThis,
                   ),
-                  onDismissed: (direction) async{
-                    print("Remove $index which is ${cartItems[index].itemName}");
+                  onDismissed: (direction) async {
+                    print(
+                        "Remove $index which is ${cartItems[index].itemName}");
                     getUserID();
                     undoStacks.add(OopsStack(index, cartItems[index]));
-                    await DatabaseService(uid: userID).deleteCartItemData(itemID: cartItems[index].itemUid);
+                    await DatabaseService(uid: userID)
+                        .deleteCartItemData(itemID: cartItems[index].itemUid);
                     scaffoldKey.currentState.showSnackBar(
                       SnackBar(
                         content: Text('Wendelete ${cartItems[index].itemName}'),
@@ -144,11 +163,6 @@ class _CartItemListViewState extends State<CartItemListView> {
                           onPressed: () async {
                             doThisUndo();
                             checkUndoNow();
-//                            if(undoStacks.isNotEmpty){
-//                              setState(() {
-//                                undoDisabled = false;
-//                              });
-//                            }
                           },
                           label: 'UNDO',
                         ),
@@ -158,9 +172,9 @@ class _CartItemListViewState extends State<CartItemListView> {
                     //loadThat();
                   },
                 );
-              }
-          );
+              });
         } else {
+          print('Loading cart');
           return Loading();
         }
       },
@@ -175,7 +189,7 @@ class CartItemRebros extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<CartItem>>.value(
-        value: DatabaseService(uid: whichUser).cartItemsData,
+      value: DatabaseService(uid: whichUser).cartItemsData,
       child: CartItemListBuilder(),
     );
   }
@@ -186,27 +200,34 @@ class CartAhItDoesntWork extends StatelessWidget {
   final Function setWhichUndoEnabled;
   final Function turnOnUndo;
   final Function turnOffUndo;
-  CartAhItDoesntWork({this.scaffoldKey, this.setWhichUndoEnabled, this.turnOffUndo, this.turnOnUndo});
+  CartAhItDoesntWork(
+      {this.scaffoldKey,
+      this.setWhichUndoEnabled,
+      this.turnOffUndo,
+      this.turnOnUndo});
 
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
-        value: AuthService().user,
-      child: CartItemListView(scaffoldKey: scaffoldKey, setWhichUndoDisable: setWhichUndoEnabled, turnOffUndo: turnOffUndo, turnOnUndo: turnOnUndo,),
+      value: AuthService().user,
+      child: CartItemListView(
+        scaffoldKey: scaffoldKey,
+        setWhichUndoDisable: setWhichUndoEnabled,
+        turnOffUndo: turnOffUndo,
+        turnOnUndo: turnOnUndo,
+      ),
     );
   }
 }
-
-
 
 class CartItemTile extends StatefulWidget {
   final CartItem cartItem;
   final bool checkOutThisOne;
   CartItemTile({this.cartItem, this.checkOutThisOne});
 
-
   @override
-  _CartItemTileState createState() => _CartItemTileState(cartItem: cartItem, checkOutThisOne: checkOutThisOne);
+  _CartItemTileState createState() =>
+      _CartItemTileState(cartItem: cartItem, checkOutThisOne: checkOutThisOne);
 }
 
 class _CartItemTileState extends State<CartItemTile> {
@@ -218,13 +239,26 @@ class _CartItemTileState extends State<CartItemTile> {
 
   var userID;
 
-  Future getUserID() async{
+  Future getUserID() async {
     FirebaseUser user = await _auth.currentUser();
     String id = user.uid;
     userID = id;
   }
 
-
+  void _showEditCartDataPanel({String itemIDYes}) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 60.0),
+          child: EditCartData(
+            isAddNew: false,
+            itemID: itemIDYes,
+          ),
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -241,15 +275,16 @@ class _CartItemTileState extends State<CartItemTile> {
       child: Card(
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
-          onTap: (){
-
+          onTap: () {
+            _showEditCartDataPanel(itemIDYes: cartItem.itemUid);
           },
           leading: Checkbox(
-            onChanged: (value){
+            onChanged: (value) {
               getUserID();
               setState(() {
                 _isCheckout = value;
-                DatabaseService(uid: userID).checkOutThisYesNo(itemId: cartItem.itemUid, whichValue: _isCheckout);
+                DatabaseService(uid: userID).checkOutThisYesNo(
+                    itemId: cartItem.itemUid, whichValue: _isCheckout);
               });
             },
             value: _isCheckout,
@@ -264,11 +299,16 @@ class _CartItemTileState extends State<CartItemTile> {
 //          },
 //          value: cartItem.checkoutThis ?? false,
 //          controlAffinity: ListTileControlAffinity.leading,
-          title: RentalParticularName(itemID: widget.cartItem.itemUid,),
-          subtitle: RentalParticularDetail(itemID: widget.cartItem.itemUid,),
+          title: RentalParticularName(
+            itemID: widget.cartItem.itemUid,
+          ),
+          subtitle: RentalParticularDetail(
+            itemID: widget.cartItem.itemUid,
+          ),
         ),
       ),
-    );;
+    );
+    ;
   }
 }
 
@@ -282,13 +322,14 @@ class _CartItemListBuilderState extends State<CartItemListBuilder> {
   Widget build(BuildContext context) {
     final cartItems = Provider.of<List<CartItem>>(context) ?? [];
     return ListView.builder(
-      scrollDirection: Axis.vertical,
+        scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: cartItems.length,
-        itemBuilder: (context, index){
-          return CartItemTile(cartItem: cartItems[index],);
-        }
-    );
+        itemBuilder: (context, index) {
+          return CartItemTile(
+            cartItem: cartItems[index],
+          );
+        });
   }
 }
 
@@ -305,4 +346,3 @@ CircleAvatar(
                 child: Text('ReCa'),
               ),
  */
-

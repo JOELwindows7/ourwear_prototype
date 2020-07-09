@@ -158,6 +158,12 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_spinbox",
+      "rootUri": "file:///C:/Users/joelr/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/flutter_spinbox-0.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
+    },
+    {
       "name": "flutter_spinkit",
       "rootUri": "file:///C:/Users/joelr/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/flutter_spinkit-4.1.2+1",
       "packageUri": "lib/",
@@ -458,7 +464,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-07-01T16:10:34.131484Z",
+  "generated": "2020-07-09T13:57:16.906203Z",
   "generator": "pub",
   "generatorVersion": "2.8.4"
 }

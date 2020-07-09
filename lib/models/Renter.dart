@@ -41,6 +41,8 @@ class Cart {
   });
 }
 
+enum ExecuteWhen { Now , SpecificDate, Whenever }
+
 class CartItem {
   final checkoutThis;
   final itemUid;
@@ -49,7 +51,10 @@ class CartItem {
   final imager;
   final price;
   final descriptions;
-  final int timeBorrowDay;
+  final int timeBorrowDay; // -1 to "stop at anytime"
+  final ExecuteWhen executeWhen;
+  final Timestamp borrowFrom;
+  final Timestamp borrowTo;
   final itemName;
   final rentalReference;
 
@@ -60,6 +65,9 @@ class CartItem {
       this.itemName,
       this.rentalReference,
       this.timeBorrowDay,
+      this.executeWhen, //0 Now, 1 Specific Date, 2 Whenever ready
+      this.borrowFrom,
+      this.borrowTo,
       this.descriptions,
       this.price,
       this.imager,
