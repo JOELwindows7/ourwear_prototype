@@ -48,8 +48,8 @@ class _MakeshiftItemViewState extends State<MakeshiftItemView> {
       builder: (context) {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 60.0),
-          child: EditCartData(
-            isAddNew: false,
+          child: EditCartAhDoesntWork(
+            isAddNew: true,
             itemID: itemID,
           ),
         );

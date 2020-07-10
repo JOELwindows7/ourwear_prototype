@@ -128,7 +128,7 @@ class _CartItemListViewState extends State<CartItemListView> {
       this.turnOffUndo});
   @override
   Widget build(BuildContext context) {
-    //final user = Provider.of<User>(context);
+    final user = Provider.of<User>(context);
     return StreamBuilder<List<CartItem>>(
       stream: DatabaseService(uid: userID).cartItemsData,
       builder: (context, snapshot) {
@@ -250,8 +250,8 @@ class _CartItemTileState extends State<CartItemTile> {
       context: context,
       builder: (context) {
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 60.0),
-          child: EditCartData(
+          padding: EdgeInsets.symmetric(vertical: 50.0),
+          child: EditCartAhDoesntWork(
             isAddNew: false,
             itemID: itemIDYes,
           ),

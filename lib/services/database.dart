@@ -106,12 +106,17 @@ class DatabaseService {
     });
   }
 
-  Future updateCartItemDataMore(
-      {bool checkoutThis,
-      String itemName,
-      String itemId,
-      int quantity,
-      String rentalReferencePath}) async {
+  Future updateCartItemDataMore({
+    bool checkoutThis,
+    String itemName,
+    String itemId,
+    int quantity,
+    String rentalReferencePath,
+    int executeWhen,
+    Timestamp borrowFrom,
+    Timestamp borrowTo,
+    int timeBorrowDay,
+  }) async {
     //TODO: query rental list, get the item refered by ID
     var tempQuantity = quantity;
     return await wearerCollection
@@ -124,6 +129,10 @@ class DatabaseService {
       'quantity': tempQuantity,
       'rentalReference': rentalCollection.reference().document(itemId),
       'checkOutThis': checkoutThis,
+      'executeWhen': executeWhen,
+      'timeBorrowDay': timeBorrowDay,
+      'borrowFrom': borrowFrom,
+      'borrowTo': borrowTo,
     });
   }
 
@@ -139,7 +148,15 @@ class DatabaseService {
     return await updateCartItemData(itemId, 0, itemId);
   }
 
-  Future addToCart({String itemId, String itemName, int quantity}) async {
+  Future addToCart({
+    String itemId,
+    String itemName,
+    int quantity,
+    int executeWhen = 1,
+    int timeBorrowDay = 7,
+    Timestamp borrowFrom,
+    Timestamp borrowTo,
+  }) async {
     // await touchCartItemData(itemId);
     await updateCartItemDataMore(
       itemName: itemName,
@@ -147,6 +164,10 @@ class DatabaseService {
       quantity: quantity,
       rentalReferencePath: 'rental/$itemId',
       checkoutThis: true,
+      executeWhen: executeWhen,
+      timeBorrowDay: timeBorrowDay,
+      borrowFrom: borrowFrom ?? Timestamp.now(),
+      borrowTo: borrowTo ?? Timestamp.now(),
     );
     //TODO separate container of mini stream builder of queryable rental.
   }
@@ -236,7 +257,7 @@ class DatabaseService {
         quantity: e.data['quantity'] ?? 1,
         checkoutThis: e.data['checkOutThis'] ?? true,
         //rentalReference: e.data['rentalReference'] ?? 'Rental()',
-        executeWhen: e.data['executeNowOrLater'] ?? 1, // when to execute
+        executeWhen: e.data['executeWhen'] ?? 1, // when to execute
         borrowFrom: e.data['borrowFrom'] ?? Timestamp.now(), //if specific date
         borrowTo: e.data['borrowTo'] ?? Timestamp.now(),
         timeBorrowDay: e.data['timeBorrowDay'] ?? 1, //For how many days
@@ -276,7 +297,7 @@ class DatabaseService {
       userId: snapshot.data['userId'] ?? '<entahlah>',
       descriptions: snapshot.data['descriptions'],
       price: snapshot.data['price'],
-      isAvailable: snapshot.data['available'] ?? false,
+      isAvailable: snapshot.data['isAvailable'] ?? false,
       imager: snapshot.data['imager'],
     );
   }
@@ -309,7 +330,8 @@ class DatabaseService {
       //rentalReference: e.data['rentalReference'] ?? 'Rental()',
       borrowFrom: snapshot.data['borrowFrom'] ?? Timestamp.now(),
       borrowTo: snapshot.data['borrowTo'] ?? Timestamp.now(),
-      executeWhen: snapshot.data['executeNowOrLater'] ?? 1,
+      executeWhen: snapshot.data['executeWhen'] ?? 1,
+      timeBorrowDay: snapshot.data['timeBorrowDay'] ?? 7,
     );
   }
 

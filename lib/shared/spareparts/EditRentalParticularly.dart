@@ -68,10 +68,12 @@ class _EditRentalParticularlyState extends State<EditRentalParticularly> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             Rental particularData = snapshot.data;
-            print("edit Rental ${particularData.nama}");
+            print(
+                "edit Rental ${particularData.nama} is available = ${particularData.isAvailable}");
 
             if (!sparse) {
               _currentAvailable = particularData.isAvailable;
+
               sparse = true;
             }
 

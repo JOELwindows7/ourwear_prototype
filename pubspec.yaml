@@ -44,6 +44,8 @@ dependencies:
 
   flutter_spinbox: any
 
+  datetime_picker_formfield: any
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

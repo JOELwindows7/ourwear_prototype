@@ -1,3 +1,4 @@
+import 'package:box2d_flame/box2d.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Wearer {
@@ -41,18 +42,18 @@ class Cart {
   });
 }
 
-enum ExecuteWhen { Now , SpecificDate, Whenever }
+enum ExecuteWhen { Now, SpecificDate, Whenever }
 
 class CartItem {
   final checkoutThis;
   final itemUid;
-  final quantity;
+  final int quantity;
   final userId; //who has that item
   final imager;
   final price;
   final descriptions;
   final int timeBorrowDay; // -1 to "stop at anytime"
-  final ExecuteWhen executeWhen;
+  final int executeWhen;
   final Timestamp borrowFrom;
   final Timestamp borrowTo;
   final itemName;

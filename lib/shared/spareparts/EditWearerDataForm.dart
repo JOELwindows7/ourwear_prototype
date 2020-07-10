@@ -19,7 +19,7 @@ class _EditWearerDataFormState extends State<EditWearerDataForm> {
   String _currentName;
   String _currentPhone;
   String _currentAddress;
-  FillData({String name, String phone, String address}){
+  FillData({String name, String phone, String address}) {
     _currentName = name;
     _currentPhone = phone;
     _currentAddress = address;
@@ -27,7 +27,7 @@ class _EditWearerDataFormState extends State<EditWearerDataForm> {
 
   String userID;
   AnUserID anUserID = AnUserID();
-  void getUserID(){
+  void getUserID() {
     userID = anUserID.whatUserID();
   }
 
@@ -45,11 +45,11 @@ class _EditWearerDataFormState extends State<EditWearerDataForm> {
     //final user = Provider.of<User>(context);
     return StreamBuilder<Wearer>(
       stream: DatabaseService(uid: userID).wearerData,
-      builder: (context, snapshot){
+      builder: (context, snapshot) {
         //snapshot above is flutter part of implementation
         getUserID();
-        
-        if(snapshot.hasData){
+
+        if (snapshot.hasData) {
           Wearer userData = snapshot.data;
           print("edit user ${userData.name}");
           // preFillData(
@@ -63,30 +63,41 @@ class _EditWearerDataFormState extends State<EditWearerDataForm> {
               children: <Widget>[
                 Text(
                   'Ubah data Wearer-mu.',
-                  style: TextStyle(fontSize: 18.0,),
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
                 ),
-                SizedBox(height: 20.0,),
+                SizedBox(
+                  height: 20.0,
+                ),
                 TextFormField(
                   initialValue: userData.name,
                   decoration: textInputDecoration,
-                  validator: (val) => val.isEmpty ? 'Silahkan Masukan Nama' : null,
+                  validator: (val) =>
+                      val.isEmpty ? 'Silahkan Masukan Nama' : null,
                   onChanged: (val) => setState(() => _currentName = val),
                 ),
-                SizedBox(height: 20.0,),
+                SizedBox(
+                  height: 20.0,
+                ),
                 //Phone
                 TextFormField(
                   initialValue: userData.phone,
                   decoration: textInputDecoration,
-                  validator: (val) => val.isEmpty ? 'Silahkan Masukan Nomor Telepon' : null,
+                  validator: (val) =>
+                      val.isEmpty ? 'Silahkan Masukan Nomor Telepon' : null,
                   onChanged: (val) => setState(() => _currentPhone = val),
                 ),
-                SizedBox(height: 20.0,),
+                SizedBox(
+                  height: 20.0,
+                ),
                 //Address (Dangerous! use raised button to select template instead!)
                 //TODO: address Type such as Personal Private, Rent Shop, Deliver to, etc.
                 TextFormField(
                   initialValue: userData.address,
                   decoration: textInputDecoration,
-                  validator: (val) => val.isEmpty ? 'Silahkan Masukan Alamat' : null,
+                  validator: (val) =>
+                      val.isEmpty ? 'Silahkan Masukan Alamat' : null,
                   onChanged: (val) => setState(() => _currentAddress = val),
                 ),
                 RaisedButton(
@@ -98,21 +109,17 @@ class _EditWearerDataFormState extends State<EditWearerDataForm> {
                     onPressed: () async {
                       getUserID();
 
-
-                      if(_formKey.currentState.validate()){
+                      if (_formKey.currentState.validate()) {
                         await DatabaseService(
-                            uid: userID,
+                          uid: userID,
                         ).updateWearerData(
-                          _currentName ?? userData.name, 
-                          _currentPhone ?? userData.phone, 
+                          _currentName ?? userData.name,
+                          _currentPhone ?? userData.phone,
                           _currentAddress ?? userData.address,
                         );
                         Navigator.pop(context);
-                      } else {
-
-                      }
-                    }
-                ),
+                      } else {}
+                    }),
               ],
             ),
           );
