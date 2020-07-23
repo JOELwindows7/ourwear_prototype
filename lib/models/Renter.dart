@@ -83,6 +83,10 @@ class TransactionOrders {
   final List<Timestamp>
       moreDates; //TODO: separate in detail of date of when status here it is. when this status was reached?
   final rentalReference;
+  final int timeBorrowDay; // -1 to "stop at anytime"
+  final int executeWhen;
+  final Timestamp borrowFrom;
+  final Timestamp borrowTo;
   final int statusRightNow;
   //TODO: payment method string tell
 
@@ -105,5 +109,10 @@ class TransactionOrders {
       this.orderedAt,
       this.moreDates,
       this.statusRightNow,
-      this.rentalReference});
+      this.rentalReference,
+      this.executeWhen,
+        this.borrowFrom,
+        this.borrowTo,
+        this.timeBorrowDay,
+      });
 }
