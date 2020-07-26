@@ -17,12 +17,8 @@ class AttemptToCheckout extends StatefulWidget {
 }
 
 class _AttemptToCheckoutState extends State<AttemptToCheckout> {
-
-
   @override
   Widget build(BuildContext context) {
-
-
     return StreamProvider<List<CartItem>>.value(
       value: DatabaseService().cartItemsData,
       child: SubAttemptCheckout(),
@@ -42,17 +38,13 @@ class _SubAttemptCheckoutState extends State<SubAttemptCheckout> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final db = Firestore.instance;
 
-  List<CartItem> fakeCart =[
+  List<CartItem> fakeCart = [
     CartItem(
-      itemName: 'haha',
-      itemUid: 0,
-      quantity: 1,
-      rentalReference: 'rental/0'
-    ),
+        itemName: 'haha', itemUid: 0, quantity: 1, rentalReference: 'rental/0'),
   ];
 
   var userID;
-  Future getUserID() async{
+  Future getUserID() async {
     FirebaseUser user = await _auth.currentUser();
     String id = user.uid;
     userID = id;
@@ -64,18 +56,23 @@ class _SubAttemptCheckoutState extends State<SubAttemptCheckout> {
     Future attemptCheckoutNow() async {
       print("Start NOw pls OMG! How many: ${cartTime.length}");
       getUserID();
-      for(var i=0; i < cartTime.length; i++){
+      for (var i = 0; i < cartTime.length; i++) {
         print("Whyn't work ${cartTime[i].itemUid}");
-        DatabaseService(uid: userID).addTransactionOrderListData(cartTime[i].itemUid, cartTime[i].quantity, DateTime.now());
+        DatabaseService(uid: userID).addTransactionOrderListData(
+            cartTime[i].itemUid, cartTime[i].quantity, DateTime.now());
       }
       print("aaaaaaaa no work");
-      for(var i=0; i < cartTime.length; i++){
+      for (var i = 0; i < cartTime.length; i++) {
 //        await Firestore.instance.runTransaction((transaction) async {
 //          await transaction.delete(DatabaseService().wearerCollection.document(userID).collection('cartItems').document(cartTime[i].itemUid));
 //        });
-      DatabaseService(uid: userID).wearerCollection.document(userID).collection('cartItems').document().delete();
+        DatabaseService(uid: userID)
+            .wearerCollection
+            .document(userID)
+            .collection('cartItems')
+            .document()
+            .delete();
       }
-
     }
 
     return Scaffold(
@@ -92,28 +89,26 @@ class _SubAttemptCheckoutState extends State<SubAttemptCheckout> {
               scaffoldKey: _scaffoldKey,
             ),
             RaisedButton.icon(
-                onPressed: ()async{
-                  try{
+                onPressed: () async {
+                  try {
                     await attemptCheckoutNow();
-                  } catch(e){
+                  } catch (e) {
                     print(e);
                   }
                 },
                 icon: Icon(Icons.credit_card),
-                label: Text('Attempt Checkout')
-            ),
+                label: Text('Attempt Checkout')),
             //CartItemListView(),
             ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: fakeCart.length,
-                itemBuilder: (context, index){
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: fakeCart.length,
+                itemBuilder: (context, index) {
                   return ListTile(
                     title: Text('${fakeCart[index].itemUid}'),
                     leading: Icon(Icons.card_giftcard),
                   );
-                }
-            ),
+                }),
           ],
         ),
       ),
@@ -125,7 +120,7 @@ class CheckoutDoesNotWork extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
-        value: AuthService().user,
+      value: AuthService().user,
       child: ReallyWhyNotCheckout(),
     );
   }
@@ -144,7 +139,7 @@ class _ReallyWhyNotCheckoutState extends State<ReallyWhyNotCheckout> {
   final db = Firestore.instance;
 
   var userID;
-  Future getUserID() async{
+  Future getUserID() async {
     FirebaseUser user = await _auth.currentUser();
     String id = user.uid;
     userID = id;
@@ -161,24 +156,31 @@ class _ReallyWhyNotCheckoutState extends State<ReallyWhyNotCheckout> {
   Widget build(BuildContext context) {
     final cartTime = DatabaseService(uid: userID).cartItemsData;
 
-
-
     final user = Provider.of<User>(context);
     return StreamBuilder<List<CartItem>>(
       stream: DatabaseService(uid: userID).cartItemsData,
-      builder: (context,snapshot){
+      builder: (context, snapshot) {
         List<CartItem> cartTime = snapshot.data;
         Future attemptCheckoutNow() async {
           var cartTimeLength = cartTime.length;
           print("Start NOw pls OMG! How many: ${cartTime.length}");
           getUserID();
-          for(var i=0; i < cartTimeLength; i++){
+          for (var i = 0; i < cartTimeLength; i++) {
             CartItem dataOfIt = cartTime[i];
             print("Whyn't work ${dataOfIt.itemUid}, ${dataOfIt.itemName}");
             print("delet ${dataOfIt.itemUid}, ${dataOfIt.itemName}");
-            if(dataOfIt.checkoutThis) {
-              await DatabaseService(uid: userID).addTransactionOrderListData(dataOfIt.itemUid, dataOfIt.quantity, DateTime.now());
-              await DatabaseService(uid: userID).deleteCartItemData(itemID: dataOfIt.itemUid);
+            if (dataOfIt.checkoutThis) {
+              await DatabaseService(uid: userID).addTransactionOrderListData(
+                dataOfIt.itemUid,
+                dataOfIt.quantity,
+                DateTime.now(),
+                borrowFrom: cartTime[i].borrowFrom,
+                borrowTo: cartTime[i].borrowTo,
+                executeWhen: cartTime[i].executeWhen,
+                timeBorrowDay: cartTime[i].timeBorrowDay,
+              );
+              await DatabaseService(uid: userID)
+                  .deleteCartItemData(itemID: dataOfIt.itemUid);
             }
           }
           print("Complete Checkout");
@@ -199,16 +201,15 @@ class _ReallyWhyNotCheckoutState extends State<ReallyWhyNotCheckout> {
           ),
           persistentFooterButtons: <Widget>[
             RaisedButton.icon(
-                onPressed: ()async{
-                  try{
+                onPressed: () async {
+                  try {
                     await attemptCheckoutNow();
-                  } catch(e){
+                  } catch (e) {
                     print(e);
                   }
                 },
                 icon: Icon(Icons.credit_card),
-                label: Text('Attempt Checkout')
-            ),
+                label: Text('Attempt Checkout')),
           ],
         );
       },
@@ -267,4 +268,3 @@ wearer
       theirB
 
  */
-

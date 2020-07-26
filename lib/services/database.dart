@@ -199,7 +199,12 @@ class DatabaseService {
   }
 
   Future addTransactionOrderListData(
-      String itemId, int quantity, DateTime orderedAt) async {
+      String itemId, int quantity, DateTime orderedAt, {
+        int executeWhen,
+        int timeBorrowDay,
+        Timestamp borrowFrom,
+        Timestamp borrowTo,
+      }) async {
     //TODO: query rental list, get the item refered by ID
     var tempQuantity = quantity;
     return await wearerCollection
@@ -211,6 +216,10 @@ class DatabaseService {
       'quantity': tempQuantity,
       'orderedAt': orderedAt,
       'statusRightNow': 1,
+      'executeWhen' : executeWhen,
+      'borrowFrom' : borrowFrom,
+      'borrowTo' : borrowTo,
+      'timeBorrowDay' : timeBorrowDay,
     });
   }
 
