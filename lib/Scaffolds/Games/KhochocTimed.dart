@@ -58,13 +58,11 @@ class _KhochocTimedState extends State<KhochocTimed> {
   KhochocDatabaser databaser = KhochocDatabaser();
   //DataBaser end
 
-  void SnakBar(String text, String actionLabel){
+  void SnakBar(String text, String actionLabel) {
     _scaffoldKey.currentState.showSnackBar(new SnackBar(
       content: Text(text),
       action: SnackBarAction(
-        onPressed: (){
-
-        },
+        onPressed: () {},
         label: actionLabel,
       ),
     ));
@@ -78,11 +76,11 @@ class _KhochocTimedState extends State<KhochocTimed> {
   ];
   String KhochocSays = 'Press Play on bottom right button!';
 
-  void PressReadyButton(){
-    if(!isStartedGame){
-      detector = ShakeDetector.autoStart(onPhoneShake: (){
+  void PressReadyButton() {
+    if (!isStartedGame) {
+      detector = ShakeDetector.autoStart(onPhoneShake: () {
         setState(() {
-          if(isStartedGame) KhochocCoin++;
+          if (isStartedGame) KhochocCoin++;
         });
       });
       SnakBar('Ready Khochoc', '.');
@@ -96,55 +94,55 @@ class _KhochocTimedState extends State<KhochocTimed> {
     }
   }
 
-  void StartTimer(){
+  void StartTimer() {
     CountdownTimer countdownTimer = CountdownTimer(
       new Duration(seconds: _timerStart),
-      new Duration(seconds:1),
+      new Duration(seconds: 1),
     );
 
     var sub = countdownTimer.listen(null);
-    sub.onData((duration){
+    sub.onData((duration) {
       setState(() {
         _timerCurrent = _timerStart - duration.elapsed.inSeconds;
       });
     });
 
-    sub.onDone((){
+    sub.onDone(() {
       print('Init Countdown Done!');
       sub.cancel();
       StartGame();
     });
   }
 
-  void StartGame(){
+  void StartGame() {
     _scaffoldKey.currentState.hideCurrentSnackBar();
     setState(() {
-      bekgronColor  = Colors.green;
+      bekgronColor = Colors.green;
       _timerCurrent = _gameTimeLimit;
       KhochocSays = KhochocWords.elementAt(2);
       isStartedGame = true;
     });
 
     CountdownTimer gameTimer = CountdownTimer(
-      Duration(seconds:_gameTimeLimit),
-      Duration(seconds:1),
+      Duration(seconds: _gameTimeLimit),
+      Duration(seconds: 1),
     );
 
     var sub = gameTimer.listen(null);
-    sub.onData((duration){
+    sub.onData((duration) {
       setState(() {
         _timerCurrent = _gameTimeLimit - duration.elapsed.inSeconds;
       });
     });
 
-    sub.onDone((){
+    sub.onDone(() {
       print('Game Countdown Done! Player got ${KhochocCoin}');
       sub.cancel();
       StopGame();
     });
   }
 
-  void StopGame(){
+  void StopGame() {
     setState(() {
       bekgronColor = Colors.white;
       isStartedGame = false;
@@ -155,21 +153,31 @@ class _KhochocTimedState extends State<KhochocTimed> {
     SnakBar('You\'ve got ${KhochocCoin} 💰 Coins!', 'WOW!');
   }
 
-  void initState(){
+  void initState() {
     KhochocSays = KhochocWords.elementAt(0);
     super.initState();
-    setState(() {
-
-    });
+    setState(() {});
 //    detector = ShakeDetector.autoStart(onPhoneShake: (){
 //      setState(() {
 //        if(isStartedGame) KhochocCoin++;
 //      });
 //    });
   }
+
   Future<void> BerhentiKhochoc() async {
     detector.stopListening();
   }
+
+  void viewHiScore(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => KhochocHighScore(),
+        maintainState: true,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,7 +187,7 @@ class _KhochocTimedState extends State<KhochocTimed> {
         backgroundColor: Colors.pink,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: (){
+          onPressed: () {
             Fluttertoast.showToast(msg: 'You got $KhochocCoin 💰 Coins!');
             if (detector != null) {
               detector.stopListening();
@@ -189,7 +197,12 @@ class _KhochocTimedState extends State<KhochocTimed> {
           },
         ),
         actions: <Widget>[
-
+          FlatButton.icon(
+              onPressed: () {
+                if (!isStartedGame) viewHiScore(context);
+              },
+              icon: Icon(Icons.table_chart),
+              label: Text('Hi-score'))
         ],
       ),
       backgroundColor: bekgronColor,
@@ -240,7 +253,7 @@ class _KhochocTimedState extends State<KhochocTimed> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           PressReadyButton();
         },
         child: Icon(Icons.play_circle_outline),
