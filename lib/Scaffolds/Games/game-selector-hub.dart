@@ -4,6 +4,7 @@ import 'package:ourwearprototype/Scaffolds/Games/AnotherPageIndicatorDemo.dart';
 import 'package:ourwearprototype/Scaffolds/Games/AttemptToCheckout.dart';
 import 'package:ourwearprototype/Scaffolds/Games/CartScreen.dart';
 import 'package:ourwearprototype/Scaffolds/Games/FakeAddToCart.dart';
+import 'package:ourwearprototype/Scaffolds/Games/JustANothing.dart';
 import 'package:ourwearprototype/Scaffolds/Games/JustLookRentalLists.dart';
 import 'package:ourwearprototype/Scaffolds/Games/LoadingTest.dart';
 import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/ArrowPageIndicator.dart';
@@ -13,8 +14,8 @@ import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/StepPageInd
 import 'package:ourwearprototype/Scaffolds/Games/PagedSwipe/PagedSwipeMother.dart';
 import 'package:ourwearprototype/Scaffolds/Games/TabPageView.dart';
 import 'package:ourwearprototype/Scaffolds/Games/WearerLists.dart';
-import 'package:ourwearprototype/shared/loading.dart';
-import 'package:ourwearprototype/shared/spareparts/CartItemListView.dart';
+//import 'package:ourwearprototype/shared/loading.dart';
+//import 'package:ourwearprototype/shared/spareparts/CartItemListView.dart';
 
 import 'ContainsScaffold.dart';
 import 'Khochoc.dart';
@@ -55,8 +56,7 @@ class GameHubScaffold extends StatelessWidget {
   }
 }
 
-
-class DaftarGame{
+class DaftarGame {
   const DaftarGame(this.ikon, this.nama);
   final IconData ikon;
   final String nama;
@@ -90,100 +90,103 @@ class _GameListState extends State<GameList> {
     DaftarGame(Icons.credit_card, 'Attempt to checkout'),
     DaftarGame(Icons.shopping_cart, 'New Attempt Cart Screen'),
     DaftarGame(Icons.people, 'Wearers In Here'),
+    DaftarGame(Icons.lightbulb_outline, 'Just A Nothing'),
   ];
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: daftarGame.length,
-        itemBuilder: (context,position){
-          return ListTile(
-            onTap: (){
-              Navigator.pop(context);
-              // https://stackoverflow.com/questions/59766770/how-to-navigate-to-next-page-in-dynamic-list-view-flutter
+      itemBuilder: (context, position) {
+        return ListTile(
+          onTap: () {
+            Navigator.pop(context);
+            // https://stackoverflow.com/questions/59766770/how-to-navigate-to-next-page-in-dynamic-list-view-flutter
 
-              Navigator.push(context, MaterialPageRoute(builder: (context){
-                switch(position){
-                  case 0:
-                    return containsScaffold();
-                    break;
-                  case 1:
-                    return MazeBallScaffold();
-                    break;
-                  case 2:
-                    return NotFoundError();
-                    break;
-                  case 3:
-                    return AchakAchak();
-                    break;
-                  case 4:
-                    return Khochoc();
-                    break;
-                  case 5:
-                    return KhochocTimed();
-                    break;
-                  case 6:
-                    return KhochocHighScore();
-                    break;
-                  case 7:
-                    return OurWearRoffSkets();
-                    break;
-                  case 8:
-                    return LoadingTest();
-                    break;
-                  case 9:
-                    return PagedSwipeScaffold();
-                    break;
-                  case 10:
-                    return PageViewDemo();
-                    break;
-                  case 11:
-                    return ArrowPageIndicatorDemo();
-                    break;
-                  case 12:
-                    return LinearProgressPageIndicatorDemo();
-                    break;
-                  case 13:
-                    return StepPageIndicatorDemo();
-                    break;
-                  case 14:
-                    return AnotherPageIndicatorDemo();
-                    break;
-                  case 15:
-                    return TabScaffold();
-                    break;
-                  case 16:
-                    return JustLookRentalLists();
-                    break;
-                  case 17:
-                    return FakeAddToCart();
-                    break;
-                  case 18:
-                    return CheckoutDoesNotWork();
-                    break;
-                  case 19:
-                    return CartScreen();
-                    //return CartAhItDoesntWork();
-                    break;
-                  case 20:
-                    return WearerListsOfIt();
-                    break;
-                  default:
-                    return NotFoundError();
-                    break;
-                }
-              })
-              );
-            },
-            title: Row(
-              children: <Widget>[
-                // https://api.flutter.dev/flutter/widgets/Icon-class.html
-                // https://api.flutter.dev/flutter/material/Icons-class.html
-                Icon(daftarGame[position].ikon),
-                Text('${daftarGame[position].nama}')
-              ],
-            ),
-          );
-        },
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              switch (position) {
+                case 0:
+                  return containsScaffold();
+                  break;
+                case 1:
+                  return MazeBallScaffold();
+                  break;
+                case 2:
+                  return NotFoundError();
+                  break;
+                case 3:
+                  return AchakAchak();
+                  break;
+                case 4:
+                  return Khochoc();
+                  break;
+                case 5:
+                  return KhochocTimed();
+                  break;
+                case 6:
+                  return KhochocHighScore();
+                  break;
+                case 7:
+                  return OurWearRoffSkets();
+                  break;
+                case 8:
+                  return LoadingTest();
+                  break;
+                case 9:
+                  return PagedSwipeScaffold();
+                  break;
+                case 10:
+                  return PageViewDemo();
+                  break;
+                case 11:
+                  return ArrowPageIndicatorDemo();
+                  break;
+                case 12:
+                  return LinearProgressPageIndicatorDemo();
+                  break;
+                case 13:
+                  return StepPageIndicatorDemo();
+                  break;
+                case 14:
+                  return AnotherPageIndicatorDemo();
+                  break;
+                case 15:
+                  return TabScaffold();
+                  break;
+                case 16:
+                  return JustLookRentalLists();
+                  break;
+                case 17:
+                  return FakeAddToCart();
+                  break;
+                case 18:
+                  return CheckoutDoesNotWork();
+                  break;
+                case 19:
+                  return CartScreen();
+                  //return CartAhItDoesntWork();
+                  break;
+                case 20:
+                  return WearerListsOfIt();
+                  break;
+                case 21:
+                  return JustANothing();
+                  break;
+                default:
+                  return NotFoundError();
+                  break;
+              }
+            }));
+          },
+          title: Row(
+            children: <Widget>[
+              // https://api.flutter.dev/flutter/widgets/Icon-class.html
+              // https://api.flutter.dev/flutter/material/Icons-class.html
+              Icon(daftarGame[position].ikon),
+              Text('${daftarGame[position].nama}')
+            ],
+          ),
+        );
+      },
     );
   }
 }
