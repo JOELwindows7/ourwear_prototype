@@ -58,9 +58,9 @@ class _PageViewDemoState extends State<PageViewDemo> {
               _buildCircleIndicator7(),
             ]
                 .map((item) => Padding(
-              child: item,
-              padding: EdgeInsets.all(8.0),
-            ))
+                      child: item,
+                      padding: EdgeInsets.all(8.0),
+                    ))
                 .toList(),
           ),
         ),
@@ -78,7 +78,7 @@ class _PageViewDemoState extends State<PageViewDemo> {
           itemBuilder: (BuildContext context, int index) {
             return Center(
               child: FlutterLogo(
-                colors: _items[index],
+                textColor: _items[index],
                 size: 50.0,
               ),
             );
