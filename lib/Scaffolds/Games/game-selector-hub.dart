@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ourwearprototype/Scaffolds/Games/AnLampuOid.dart';
 import 'package:ourwearprototype/Scaffolds/Games/AnotherPageIndicatorDemo.dart';
 import 'package:ourwearprototype/Scaffolds/Games/AttemptToCheckout.dart';
 import 'package:ourwearprototype/Scaffolds/Games/CartScreen.dart';
@@ -14,6 +15,7 @@ import 'package:ourwearprototype/Scaffolds/Games/PageIndicatorImport/StepPageInd
 import 'package:ourwearprototype/Scaffolds/Games/PagedSwipe/PagedSwipeMother.dart';
 import 'package:ourwearprototype/Scaffolds/Games/TabPageView.dart';
 import 'package:ourwearprototype/Scaffolds/Games/WearerLists.dart';
+import 'package:ourwearprototype/Scaffolds/Games/goUnityTest.dart';
 //import 'package:ourwearprototype/shared/loading.dart';
 //import 'package:ourwearprototype/shared/spareparts/CartItemListView.dart';
 
@@ -91,6 +93,8 @@ class _GameListState extends State<GameList> {
     DaftarGame(Icons.shopping_cart, 'New Attempt Cart Screen'),
     DaftarGame(Icons.people, 'Wearers In Here'),
     DaftarGame(Icons.lightbulb_outline, 'Just A Nothing'),
+    DaftarGame(Icons.gamepad, 'Go Unity Test'),
+    DaftarGame(Icons.wb_sunny, 'an LampuOid'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -170,6 +174,12 @@ class _GameListState extends State<GameList> {
                   break;
                 case 21:
                   return JustANothing();
+                  break;
+                case 22:
+                  return GoUnityTestoid();
+                  break;
+                case 23:
+                  return AnLampuOid();
                   break;
                 default:
                   return NotFoundError();
