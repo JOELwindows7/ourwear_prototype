@@ -32,6 +32,28 @@ class Rental {
       this.isAvailable});
 }
 
+class Draft{
+  final String uid; //item id
+  final String userId; //who has that item
+  final String imager;
+  final String nama;
+  final num price;
+  final String descriptions;
+  final int timeBorrowDay;
+  final bool isAvailable;
+  //TODO: available status Y/N, Color Type
+
+  Draft(
+      {this.uid,
+      this.userId,
+      this.nama,
+      this.imager,
+      this.descriptions,
+      this.price,
+      this.timeBorrowDay,
+      this.isAvailable});
+}
+
 class Cart {
   final String uid; //user id. each user has own cart
   final String nama;

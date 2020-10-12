@@ -21,6 +21,8 @@ class DatabaseService {
       Firestore.instance.collection('wearers');
   final CollectionReference rentalCollection =
       Firestore.instance.collection('rentals');
+  final CollectionReference draftCollection =
+      Firestore.instance.collection('drafts');
   final CollectionReference khochocCollection =
       Firestore.instance.collection('KhochocHighScore');
 
@@ -68,6 +70,44 @@ class DatabaseService {
       String imager,
       bool isAvailable}) async {
     return await rentalCollection.add({
+      'imager': imager,
+      'nama': name,
+      'userId': userId,
+      'price': price,
+      'descriptions': descriptions,
+      'timeBorrowDay': timeBorrowDay,
+      'isAvailable': isAvailable,
+    });
+  }
+
+  Future updateDraftlData(
+      {String name,
+      String userId,
+      num price,
+      String descriptions,
+      int timeBorrowDay,
+      String imager,
+      bool isAvailable}) async {
+    return await draftCollection.document(uid).setData({
+      'imager': imager,
+      'nama': name,
+      'userId': userId,
+      'price': price,
+      'descriptions': descriptions,
+      'timeBorrowDay': timeBorrowDay,
+      'isAvailable': isAvailable,
+    });
+  }
+
+  Future addDraftData(
+      {String name,
+      String userId,
+      num price,
+      String descriptions,
+      int timeBorrowDay,
+      String imager,
+      bool isAvailable}) async {
+    return await draftCollection.add({
       'imager': imager,
       'nama': name,
       'userId': userId,
@@ -258,6 +298,21 @@ class DatabaseService {
     }).toList();
   }
 
+  List<Draft> _draftListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((e) {
+      return Rental(
+        uid: e.documentID,
+        nama: e.data['nama'] ?? '<an item>',
+        userId: e.data['userId'] ?? '<item owner>',
+        imager: e.data['imager'] ?? 'Re',
+        price: e.data['price'] ?? '<price tag>',
+        descriptions: e.data['descriptions'] ?? '',
+        timeBorrowDay: e.data['timeBorrowDay'] ?? 0,
+        isAvailable: e.data['isAvailable'] ?? false,
+      );
+    }).toList();
+  }
+
   List<CartItem> _cartItemDataFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((e) {
       return CartItem(
@@ -299,6 +354,19 @@ class DatabaseService {
   }
 
   Rental _particularRentalDataFromSnapshot(DocumentSnapshot snapshot) {
+    return Rental(
+      uid: uid,
+      nama: snapshot.data['nama'],
+      timeBorrowDay: snapshot.data['timeBorrowDay'],
+      userId: snapshot.data['userId'] ?? '<entahlah>',
+      descriptions: snapshot.data['descriptions'],
+      price: snapshot.data['price'],
+      isAvailable: snapshot.data['isAvailable'] ?? false,
+      imager: snapshot.data['imager'],
+    );
+  }
+
+  Draft _particularDraftDataFromSnapshot(DocumentSnapshot snapshot) {
     return Rental(
       uid: uid,
       nama: snapshot.data['nama'],
@@ -353,6 +421,10 @@ class DatabaseService {
     return rentalCollection.snapshots().map(_rentalListFromSnapshot);
   }
 
+  Stream<List<Draft>> get drafts {
+    return rentalCollection.snapshots().map(_rentalListFromSnapshot);
+  }
+
   Stream<List<KhochocOnlineLogg>> get khochocs {
     return khochocCollection.snapshots().map(_khochocListFromSnapshot);
   }
@@ -371,6 +443,13 @@ class DatabaseService {
   }
 
   Stream<Rental> get particularRentalData {
+    return rentalCollection
+        .document(uid)
+        .snapshots()
+        .map(_particularRentalDataFromSnapshot);
+  }
+
+  Stream<Draft> get particularDraftData {
     return rentalCollection
         .document(uid)
         .snapshots()
