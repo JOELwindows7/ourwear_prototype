@@ -88,7 +88,7 @@ class DatabaseService {
       int timeBorrowDay,
       String imager,
       bool isAvailable}) async {
-    return await draftCollection.document(uid).setData({
+    return await wearerCollection.collection('drafts').document(itemId).setData({
       'imager': imager,
       'nama': name,
       'userId': userId,
@@ -107,7 +107,7 @@ class DatabaseService {
       int timeBorrowDay,
       String imager,
       bool isAvailable}) async {
-    return await draftCollection.add({
+    return await wearerCollection.collection('drafts').add({
       'imager': imager,
       'nama': name,
       'userId': userId,
@@ -422,7 +422,11 @@ class DatabaseService {
   }
 
   Stream<List<Draft>> get drafts {
-    return rentalCollection.snapshots().map(_rentalListFromSnapshot);
+    return wearerCollection
+        .document(uid)
+        .collection('drafts')
+        .snapshots()
+        .map(_draftListFromSnapshot);
   }
 
   Stream<List<KhochocOnlineLogg>> get khochocs {
@@ -450,8 +454,10 @@ class DatabaseService {
   }
 
   Stream<Draft> get particularDraftData {
-    return rentalCollection
+    return wearerCollection
         .document(uid)
+        .collection('drafts')
+        .document(subID)
         .snapshots()
         .map(_particularRentalDataFromSnapshot);
   }
