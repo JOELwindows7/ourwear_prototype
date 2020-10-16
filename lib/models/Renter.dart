@@ -19,6 +19,7 @@ class Rental {
   final String descriptions;
   final int timeBorrowDay;
   final bool isAvailable;
+  final int tradeType; // 0 = Rental, 1 = Permanent buy, 2 = Trade swap
   //TODO: available status Y/N, Color Type
 
   Rental(
@@ -29,7 +30,8 @@ class Rental {
       this.descriptions,
       this.price,
       this.timeBorrowDay,
-      this.isAvailable});
+      this.isAvailable,
+      this.tradeType,});
 }
 
 class Draft{
@@ -41,6 +43,7 @@ class Draft{
   final String descriptions;
   final int timeBorrowDay;
   final bool isAvailable;
+  final int tradeType;
   //TODO: available status Y/N, Color Type
 
   Draft(
@@ -51,7 +54,8 @@ class Draft{
       this.descriptions,
       this.price,
       this.timeBorrowDay,
-      this.isAvailable});
+      this.isAvailable,
+      this.tradeType,});
 }
 
 class Cart {

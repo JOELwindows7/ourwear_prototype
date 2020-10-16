@@ -49,7 +49,8 @@ class DatabaseService {
       String descriptions,
       int timeBorrowDay,
       String imager,
-      bool isAvailable}) async {
+      bool isAvailable,
+      int tradeType}) async {
     return await rentalCollection.document(uid).setData({
       'imager': imager,
       'nama': name,
@@ -58,6 +59,7 @@ class DatabaseService {
       'descriptions': descriptions,
       'timeBorrowDay': timeBorrowDay,
       'isAvailable': isAvailable,
+      'tradeType': tradeType,
     });
   }
 
@@ -68,7 +70,8 @@ class DatabaseService {
       String descriptions,
       int timeBorrowDay,
       String imager,
-      bool isAvailable}) async {
+      bool isAvailable,
+      int tradeType}) async {
     return await rentalCollection.add({
       'imager': imager,
       'nama': name,
@@ -77,6 +80,7 @@ class DatabaseService {
       'descriptions': descriptions,
       'timeBorrowDay': timeBorrowDay,
       'isAvailable': isAvailable,
+      'tradeType': tradeType,
     });
   }
 
@@ -87,7 +91,8 @@ class DatabaseService {
       String descriptions,
       int timeBorrowDay,
       String imager,
-      bool isAvailable}) async {
+      bool isAvailable,
+      int tradeType}) async {
     return await wearerCollection.collection('drafts').document(itemId).setData({
       'imager': imager,
       'nama': name,
@@ -96,6 +101,7 @@ class DatabaseService {
       'descriptions': descriptions,
       'timeBorrowDay': timeBorrowDay,
       'isAvailable': isAvailable,
+      'tradeType': tradeType,
     });
   }
 
@@ -106,7 +112,8 @@ class DatabaseService {
       String descriptions,
       int timeBorrowDay,
       String imager,
-      bool isAvailable}) async {
+      bool isAvailable,
+      int tradeType}) async {
     return await wearerCollection.collection('drafts').add({
       'imager': imager,
       'nama': name,
@@ -115,6 +122,7 @@ class DatabaseService {
       'descriptions': descriptions,
       'timeBorrowDay': timeBorrowDay,
       'isAvailable': isAvailable,
+      'tradeType': tradeType,
     });
   }
 
