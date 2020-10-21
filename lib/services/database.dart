@@ -12,7 +12,8 @@ import 'package:provider/provider.dart';
 class DatabaseService {
   final String uid;
   final String subID;
-  DatabaseService({this.uid, this.subID});
+  final String itemId;
+  DatabaseService({this.uid, this.subID, this.itemId});
 
   // collection reference
   final CollectionReference brewCollection =
@@ -22,7 +23,7 @@ class DatabaseService {
   final CollectionReference rentalCollection =
       Firestore.instance.collection('rentals');
   final CollectionReference draftCollection =
-      Firestore.instance.collection('drafts');
+      Firestore.instance.collection('wearers/drafts');
   final CollectionReference khochocCollection =
       Firestore.instance.collection('KhochocHighScore');
 
@@ -93,7 +94,9 @@ class DatabaseService {
       String imager,
       bool isAvailable,
       int tradeType}) async {
-    return await wearerCollection.collection('drafts').document(itemId).setData({
+    return await draftCollection
+        .document(itemId)
+        .setData({
       'imager': imager,
       'nama': name,
       'userId': userId,
@@ -114,7 +117,7 @@ class DatabaseService {
       String imager,
       bool isAvailable,
       int tradeType}) async {
-    return await wearerCollection.collection('drafts').add({
+    return await draftCollection.add({
       'imager': imager,
       'nama': name,
       'userId': userId,
@@ -247,12 +250,14 @@ class DatabaseService {
   }
 
   Future addTransactionOrderListData(
-      String itemId, int quantity, DateTime orderedAt, {
-        int executeWhen,
-        int timeBorrowDay,
-        Timestamp borrowFrom,
-        Timestamp borrowTo,
-      }) async {
+    String itemId,
+    int quantity,
+    DateTime orderedAt, {
+    int executeWhen,
+    int timeBorrowDay,
+    Timestamp borrowFrom,
+    Timestamp borrowTo,
+  }) async {
     //TODO: query rental list, get the item refered by ID
     var tempQuantity = quantity;
     return await wearerCollection
@@ -264,10 +269,10 @@ class DatabaseService {
       'quantity': tempQuantity,
       'orderedAt': orderedAt,
       'statusRightNow': 1,
-      'executeWhen' : executeWhen,
-      'borrowFrom' : borrowFrom,
-      'borrowTo' : borrowTo,
-      'timeBorrowDay' : timeBorrowDay,
+      'executeWhen': executeWhen,
+      'borrowFrom': borrowFrom,
+      'borrowTo': borrowTo,
+      'timeBorrowDay': timeBorrowDay,
     });
   }
 
@@ -308,7 +313,7 @@ class DatabaseService {
 
   List<Draft> _draftListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((e) {
-      return Rental(
+      return Draft(
         uid: e.documentID,
         nama: e.data['nama'] ?? '<an item>',
         userId: e.data['userId'] ?? '<item owner>',
@@ -375,7 +380,7 @@ class DatabaseService {
   }
 
   Draft _particularDraftDataFromSnapshot(DocumentSnapshot snapshot) {
-    return Rental(
+    return Draft(
       uid: uid,
       nama: snapshot.data['nama'],
       timeBorrowDay: snapshot.data['timeBorrowDay'],
@@ -467,7 +472,7 @@ class DatabaseService {
         .collection('drafts')
         .document(subID)
         .snapshots()
-        .map(_particularRentalDataFromSnapshot);
+        .map(_particularDraftDataFromSnapshot);
   }
 
   Stream<CartItem> get particularCartItemData {

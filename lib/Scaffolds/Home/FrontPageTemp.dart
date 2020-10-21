@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ourwearprototype/Scaffolds/Games/PagedSwipe/Pages/Page1.dart';
 import 'package:ourwearprototype/Scaffolds/Games/game-selector-hub.dart';
 import 'package:ourwearprototype/Scaffolds/Prosotipe/MakeshiftItemView.dart';
+import 'package:ourwearprototype/homepage/homepage_boss.dart';
 import 'package:ourwearprototype/shared/spareparts/RentalListView.dart';
 import 'package:page_indicator/page_indicator.dart';
 
@@ -21,33 +22,39 @@ class FrontPageTemp extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             RaisedButton.icon(
-                onPressed: (){
-                  Navigator.push(context,
-                    MaterialPageRoute(
-                      builder: (context) => MakeshiftItemView()
-                    ),
-                  );
-                },
-                icon: Icon(Icons.error),
-                label: Row(
-                  children: <Widget>[
-                    Icon(Icons.warning),
-                    Text('Max Sure'),
-                  ],
-                ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MakeshiftItemView()),
+                );
+              },
+              icon: Icon(Icons.error),
+              label: Row(
+                children: <Widget>[
+                  Icon(Icons.warning),
+                  Text('Max Sure'),
+                ],
+              ),
             ),
             RaisedButton.icon(
-                onPressed: (){
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GameHubScaffold()),
+                );
+              },
+              icon: Icon(Icons.videogame_asset),
+              label: Text('Mini games'),
+            ),
+            RaisedButton.icon(
+                onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => GameHubScaffold()
-                    ),
+                    MaterialPageRoute(builder: (context) => HomepageBoss()),
                   );
                 },
-                icon: Icon(Icons.videogame_asset),
-                label: Text('Mini games'),
-            ),
+                icon: Icon(Icons.home_filled),
+                label: Text('New Homepage')),
             Container(
               height: 150.0,
               child: Padding(
@@ -140,7 +147,7 @@ class FrontPageTemp extends StatelessWidget {
 //                ),
 //              ),
 //            ),
-          Text('AAA'),
+            Text('AAA'),
           ],
         ),
       ),
