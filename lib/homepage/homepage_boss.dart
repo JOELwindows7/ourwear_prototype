@@ -3,6 +3,16 @@ import 'package:ourwearprototype/homepage/homepage_general.dart';
 // https://flutter.dev/docs/cookbook/design/tabs
 // https://medium.com/fluttervn/making-bottom-tabbar-with-flutter-5ff82e8defe0
 // https://api.flutter.dev/flutter/material/BottomNavigationBar-class.html
+// https://flutter.dev/docs/cookbook/design/tabs
+// https://medium.com/@DakshHub/flutter-displaying-dynamic-contents-using-listview-builder-f2cedb1a19fb
+/*
+https://flutter.dev/docs/development/ui/advanced/slivers
+https://flutter.dev/docs/development/ui/assets-and-images
+https://flutter.dev/docs/cookbook/lists/horizontal-list
+https://api.flutter.dev/flutter/material/SliverAppBar-class.html
+https://api.flutter.dev/flutter/widgets/CustomScrollView-class.html
+
+*/
 //JOELwindows7
 
 class HomepageBoss extends StatefulWidget {
@@ -18,7 +28,29 @@ class _HomepageBossState extends State<HomepageBoss> {
     });
   }
 
-  List<Widget> _homepageOptions = <Widget>[HomepageGeneral()];
+  List<Widget> _homepageOptions = <Widget>[
+    HomepageGeneral(),
+    Container(
+      child: Center(
+        child: Text('B'),
+      ),
+    ),
+    Container(
+      child: Center(
+        child: Text('C'),
+      ),
+    ),
+    Container(
+      child: Center(
+        child: Text('D'),
+      ),
+    ),
+    Container(
+      child: Center(
+        child: Text('E'),
+      ),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +80,8 @@ class _HomepageBossState extends State<HomepageBoss> {
           ),
         ],
         currentIndex: _selectedHomepage,
-        selectedItemColor: Colors.redAccent[800],
+        selectedItemColor: Colors.red,
+        unselectedItemColor: Colors.black,
         onTap: _onItemTapped,
       ),
     );
