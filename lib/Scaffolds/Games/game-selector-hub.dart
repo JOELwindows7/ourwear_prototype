@@ -16,6 +16,7 @@ import 'package:ourwearprototype/Scaffolds/Games/PagedSwipe/PagedSwipeMother.dar
 import 'package:ourwearprototype/Scaffolds/Games/TabPageView.dart';
 import 'package:ourwearprototype/Scaffolds/Games/WearerLists.dart';
 import 'package:ourwearprototype/Scaffolds/Games/goUnityTest.dart';
+import 'package:ourwearprototype/Scaffolds/Games/whatso-werror-scrol.dart';
 //import 'package:ourwearprototype/shared/loading.dart';
 //import 'package:ourwearprototype/shared/spareparts/CartItemListView.dart';
 
@@ -95,6 +96,7 @@ class _GameListState extends State<GameList> {
     DaftarGame(Icons.lightbulb_outline, 'Just A Nothing'),
     DaftarGame(Icons.gamepad, 'Go Unity Test'),
     DaftarGame(Icons.wb_sunny, 'an LampuOid'),
+    DaftarGame(Icons.error, 'WhatSoWerror'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -180,6 +182,9 @@ class _GameListState extends State<GameList> {
                   break;
                 case 23:
                   return AnLampuOid();
+                  break;
+                case 24:
+                  return WhatSoWerror();
                   break;
                 default:
                   return NotFoundError();

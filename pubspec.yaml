@@ -70,8 +70,8 @@ flutter:
   assets:
   #  - asset/audio/explosionLoud.wav
     - asset/
-  #  - asset/images/ 
-  #  - asset/images/anOurwearItemCoverPlaceholder.png
+    - asset/images/ 
+    - asset/images/anOurwearItemCoverPlaceholder.png
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

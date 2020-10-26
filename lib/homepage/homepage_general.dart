@@ -71,6 +71,7 @@ class _HomepageGeneralState extends State<HomepageGeneral> {
               return Column(
                 children: [
                   Container(
+                    // 3 Button
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -112,10 +113,11 @@ class _HomepageGeneralState extends State<HomepageGeneral> {
                       ],
                     ),
                   ),
+                  //RENT
                   Container(
-                    padding: EdgeInsets.all(20),
                     child: Column(
                       children: [
+                        //RENT NEWS
                         Text('Berita Terbaru'),
                         FlatButton(
                           height: 200.0,
@@ -134,11 +136,13 @@ class _HomepageGeneralState extends State<HomepageGeneral> {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Text(
-                                'Get voucher',
-                                overflow: TextOverflow.fade,
-                                style: TextStyle(
-                                  fontSize: 24.0,
+                              Expanded(
+                                child: Text(
+                                  'Get voucher',
+                                  overflow: TextOverflow.fade,
+                                  style: TextStyle(
+                                    fontSize: 24.0,
+                                  ),
                                 ),
                               ),
                               Icon(
@@ -147,10 +151,106 @@ class _HomepageGeneralState extends State<HomepageGeneral> {
                             ],
                           ),
                         ),
-                        ScrollingItemCovers()
+                        // FlatButton.icon(
+                        //   height: 40.0,
+                        //   color: Colors.blue,
+                        //   onPressed: () {},
+                        //   icon: Icon(Icons.arrow_forward),
+                        //   label: Text('Get Voucher'),
+                        // ),
                       ],
                     ),
-                  )
+                  ),
+                  Container(
+                    // RENT
+                    //padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        //TODO Harvest Rent recommended & special data
+                        Text('Produk Spesial Rent'),
+                        ScrollingItemCovers(
+                          itemCovers: [
+                            ItemsOnIt(
+                              titling: 'Rent Special',
+                            ),
+                            ItemsOnIt(
+                              titling: 'Rent Special2',
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text('Rekomendasi Rent Untukmu'),
+                        ScrollingItemCovers(
+                          itemCovers: [
+                            ItemsOnIt(
+                              titling: 'Rent Recommended',
+                            ),
+                            ItemsOnIt(
+                              titling: 'Rent Recommended2',
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                      ],
+                    ),
+                  ),
+                  //SHOP
+                  Container(
+                    width: 200.0,
+                    height: 60.0,
+                    color: Colors.orange,
+                    child: FlatButton(
+                      height: 200.0,
+                      color: Colors.orange,
+                      onPressed: () {},
+                      child: Row(
+                        children: [
+                          Text('SHOP Coming Soon'),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // TRADE
+                  Container(
+                    child: Column(
+                      children: [
+                        //TODO Harvest Trade recommended & special data
+                        Text('Produk Spesial Trade'),
+                        ScrollingItemCovers(
+                          itemCovers: [
+                            ItemsOnIt(
+                              titling: 'Trade Special',
+                            ),
+                            ItemsOnIt(
+                              titling: 'Trade Special2',
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text('Rekomendasi Trade Untukmu'),
+                        ScrollingItemCovers(
+                          itemCovers: [
+                            ItemsOnIt(
+                              titling: 'Trade Recommended',
+                            ),
+                            ItemsOnIt(
+                              titling: 'Trade Recommended2',
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               );
             },

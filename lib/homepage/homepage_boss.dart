@@ -71,13 +71,14 @@ class _HomepageBossState extends State<HomepageBoss> {
             label: 'Wishlist',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag),
-            label: 'My Bag',
+            icon: Icon(Icons.shopping_cart),
+            label: 'My cart',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Akun',
           ),
+          
         ],
         currentIndex: _selectedHomepage,
         selectedItemColor: Colors.red,
