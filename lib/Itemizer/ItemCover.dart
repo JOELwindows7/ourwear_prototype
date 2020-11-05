@@ -49,15 +49,19 @@ class _ItemCoverHomeState extends State<ItemCoverHome> {
     if (titleP == null || titleP == "") titleP = "Untitleda";
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Image(
           fit: BoxFit.contain,
           //loadingBuilder: (context, child, loadingProgress) => Loading(),
           width: 150.0,
-          height: 200.0,
+          height: 175.0,
           image: AssetImage(imageP),
         ),
-        Text(titleP),
+        Text(
+          titleP,
+          overflow: TextOverflow.ellipsis,
+        ),
       ],
     );
   }
@@ -162,9 +166,12 @@ class _ScrollingItemCoversState extends State<ScrollingItemCovers> {
         scrollDirection: Axis.horizontal,
         itemCount: itemCovers.length,
         itemBuilder: (context, index) {
-          return ItemCoverHome(
-            titling: itemsP.elementAt(index).titling,
-            imagePath: itemsP.elementAt(index).imagePath,
+          return FlatButton(
+            onPressed: () {},
+            child: ItemCoverHome(
+              titling: itemsP.elementAt(index).titling,
+              imagePath: itemsP.elementAt(index).imagePath,
+            ),
           );
           //return Container();
         },
@@ -173,4 +180,112 @@ class _ScrollingItemCoversState extends State<ScrollingItemCovers> {
   }
 }
 
+class HandoverSideScrollItems extends StatefulWidget {
+  final String categoryTitle;
+  final List<ItemsOnIt> itemCovers;
+  HandoverSideScrollItems({this.itemCovers, this.categoryTitle});
+  @override
+  _HandoverSideScrollItemsState createState() => _HandoverSideScrollItemsState(
+      itemCovers: itemCovers, categoryTitle: categoryTitle);
+}
+
+class _HandoverSideScrollItemsState extends State<HandoverSideScrollItems> {
+  final String categoryTitle;
+  final List<ItemsOnIt> itemCovers;
+  _HandoverSideScrollItemsState({this.itemCovers, this.categoryTitle});
+  @override
+  Widget build(BuildContext context) {
+    String titlesing = categoryTitle;
+    if (titlesing == '' || titlesing == null) {
+      titlesing = 'Side Scroll Items';
+    }
+
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(child: Text(titlesing)),
+              FlatButton(
+                child: Text('Lihat semua'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) {
+                            return ViewAllItems(
+                              itemCovers: itemCovers,
+                              titleing: titlesing,
+                            );
+                          },
+                          maintainState: true));
+                },
+              ),
+            ],
+          ),
+          ScrollingItemCovers(itemCovers: itemCovers),
+        ],
+      ),
+    );
+  }
+}
+
 //Dedicated Item Cover
+
+class ViewAllItems extends StatefulWidget {
+  final titleing;
+  final itemCovers;
+  ViewAllItems({this.titleing, this.itemCovers});
+  @override
+  _ViewAllItemsState createState() =>
+      _ViewAllItemsState(titleing: titleing, itemCovers: itemCovers);
+}
+
+class _ViewAllItemsState extends State<ViewAllItems> {
+  final titleing;
+  final itemCovers;
+  _ViewAllItemsState({this.titleing, this.itemCovers});
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String titlest = titleing;
+    List<ItemsOnIt> itemsP = itemCovers;
+
+    if (titlest == "" || titlest == null) {
+      titlest = "View All";
+    }
+    if (itemsP.length <= 0 || itemsP.length == null) {
+      setState(() {
+        itemsP = [
+          ItemsOnIt(titling: 'Empty'),
+        ];
+      });
+    }
+
+    // https://flutter.dev/docs/cookbook/lists/grid-lists
+    return Scaffold(
+      appBar: AppBar(
+        actions: [],
+        title: Text(titlest),
+      ),
+      body: GridView.count(
+          shrinkWrap: true,
+          crossAxisCount: 2,
+          children: List.generate(itemsP.length, (index) {
+            return FlatButton(
+              onPressed: () {},
+              child: ItemCoverHome(
+                titling: itemsP[index].titling,
+                imagePath: itemsP[index].imagePath,
+              ),
+            );
+          }, growable: true)),
+    );
+  }
+}

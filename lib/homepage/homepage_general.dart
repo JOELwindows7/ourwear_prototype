@@ -167,8 +167,8 @@ class _HomepageGeneralState extends State<HomepageGeneral> {
                     child: Column(
                       children: [
                         //TODO Harvest Rent recommended & special data
-                        Text('Produk Spesial Rent'),
-                        ScrollingItemCovers(
+                        HandoverSideScrollItems(
+                          categoryTitle: 'Produk Spesial Rent',
                           itemCovers: [
                             ItemsOnIt(
                               titling: 'Rent Special',
@@ -176,19 +176,31 @@ class _HomepageGeneralState extends State<HomepageGeneral> {
                             ItemsOnIt(
                               titling: 'Rent Special2',
                             ),
+                            ItemsOnIt(
+                              titling: 'Rent Special3',
+                            ),
+                            ItemsOnIt(
+                              titling: 'Rent Special4',
+                            ),
                           ],
                         ),
                         SizedBox(
                           height: 10.0,
                         ),
-                        Text('Rekomendasi Rent Untukmu'),
-                        ScrollingItemCovers(
+                        HandoverSideScrollItems(
+                          categoryTitle: 'Rekomendasi Rent Untukmu',
                           itemCovers: [
                             ItemsOnIt(
                               titling: 'Rent Recommended',
                             ),
                             ItemsOnIt(
                               titling: 'Rent Recommended2',
+                            ),
+                            ItemsOnIt(
+                              titling: 'Rent Recommended3',
+                            ),
+                            ItemsOnIt(
+                              titling: 'Rent Recommended4',
                             ),
                           ],
                         ),
@@ -220,8 +232,8 @@ class _HomepageGeneralState extends State<HomepageGeneral> {
                     child: Column(
                       children: [
                         //TODO Harvest Trade recommended & special data
-                        Text('Produk Spesial Trade'),
-                        ScrollingItemCovers(
+                        HandoverSideScrollItems(
+                          categoryTitle: 'Produk Spesial Trade',
                           itemCovers: [
                             ItemsOnIt(
                               titling: 'Trade Special',
@@ -229,13 +241,20 @@ class _HomepageGeneralState extends State<HomepageGeneral> {
                             ItemsOnIt(
                               titling: 'Trade Special2',
                             ),
+                            ItemsOnIt(
+                              titling: 'Trade Special3',
+                            ),
+                            ItemsOnIt(
+                              titling: 'Trade Special4',
+                            ),
                           ],
                         ),
+
                         SizedBox(
                           height: 10.0,
                         ),
-                        Text('Rekomendasi Trade Untukmu'),
-                        ScrollingItemCovers(
+                        HandoverSideScrollItems(
+                          categoryTitle: 'Rekomendasi Trade Untukmu',
                           itemCovers: [
                             ItemsOnIt(
                               titling: 'Trade Recommended',
@@ -243,8 +262,15 @@ class _HomepageGeneralState extends State<HomepageGeneral> {
                             ItemsOnIt(
                               titling: 'Trade Recommended2',
                             ),
+                            ItemsOnIt(
+                              titling: 'Trade Recommended3',
+                            ),
+                            ItemsOnIt(
+                              titling: 'Trade Recommended4',
+                            ),
                           ],
                         ),
+
                         SizedBox(
                           height: 10.0,
                         ),
