@@ -45,6 +45,7 @@ class DatabaseService {
 
   Future updateRentalData(
       {String name,
+      String location,
       String userId,
       num price,
       String descriptions,
@@ -61,11 +62,13 @@ class DatabaseService {
       'timeBorrowDay': timeBorrowDay,
       'isAvailable': isAvailable,
       'tradeType': tradeType,
+      'location': location,
     });
   }
 
   Future addRentalData(
       {String name,
+      String location,
       String userId,
       num price,
       String descriptions,
@@ -82,11 +85,13 @@ class DatabaseService {
       'timeBorrowDay': timeBorrowDay,
       'isAvailable': isAvailable,
       'tradeType': tradeType,
+      'location': location,
     });
   }
 
   Future updateDraftlData(
       {String name,
+      String location,
       String userId,
       num price,
       String descriptions,
@@ -94,9 +99,7 @@ class DatabaseService {
       String imager,
       bool isAvailable,
       int tradeType}) async {
-    return await draftCollection
-        .document(itemId)
-        .setData({
+    return await draftCollection.document(itemId).setData({
       'imager': imager,
       'nama': name,
       'userId': userId,
@@ -105,6 +108,7 @@ class DatabaseService {
       'timeBorrowDay': timeBorrowDay,
       'isAvailable': isAvailable,
       'tradeType': tradeType,
+      'location': location,
     });
   }
 
