@@ -16,25 +16,29 @@ class Rental {
   final String imager;
   final String nama;
   final num price;
+  final String location;
   final String descriptions;
   final int timeBorrowDay;
   final bool isAvailable;
   final int tradeType; // 0 = Rental, 1 = Permanent buy, 2 = Trade swap
   //TODO: available status Y/N, Color Type
 
-  Rental(
-      {this.uid,
-      this.userId,
-      this.nama,
-      this.imager,
-      this.descriptions,
-      this.price,
-      this.timeBorrowDay,
-      this.isAvailable,
-      this.tradeType,});
+  Rental({
+    this.location,
+    this.uid,
+    this.userId,
+    this.nama,
+    this.imager,
+    this.descriptions,
+    this.price,
+    this.timeBorrowDay,
+    this.isAvailable,
+    this.tradeType,
+  });
 }
 
-class Draft{
+class Draft {
+  final String location;
   final String uid; //item id
   final String userId; //who has that item
   final String imager;
@@ -46,16 +50,18 @@ class Draft{
   final int tradeType;
   //TODO: available status Y/N, Color Type
 
-  Draft(
-      {this.uid,
-      this.userId,
-      this.nama,
-      this.imager,
-      this.descriptions,
-      this.price,
-      this.timeBorrowDay,
-      this.isAvailable,
-      this.tradeType,});
+  Draft({
+    this.location,
+    this.uid,
+    this.userId,
+    this.nama,
+    this.imager,
+    this.descriptions,
+    this.price,
+    this.timeBorrowDay,
+    this.isAvailable,
+    this.tradeType,
+  });
 }
 
 class Cart {
@@ -128,17 +134,17 @@ class TransactionOrders {
   8 = Lost
    */
 
-  TransactionOrders(
-      {this.uid,
-      this.quantity,
-      this.cartUid,
-      this.orderedAt,
-      this.moreDates,
-      this.statusRightNow,
-      this.rentalReference,
-      this.executeWhen,
-        this.borrowFrom,
-        this.borrowTo,
-        this.timeBorrowDay,
-      });
+  TransactionOrders({
+    this.uid,
+    this.quantity,
+    this.cartUid,
+    this.orderedAt,
+    this.moreDates,
+    this.statusRightNow,
+    this.rentalReference,
+    this.executeWhen,
+    this.borrowFrom,
+    this.borrowTo,
+    this.timeBorrowDay,
+  });
 }

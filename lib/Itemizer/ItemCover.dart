@@ -1,5 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:ourwearprototype/Scaffolds/Prosotipe/MakeshiftItemView.dart';
+import 'package:ourwearprototype/models/Renter.dart';
+import 'package:ourwearprototype/services/database.dart';
 import 'package:ourwearprototype/shared/loading.dart';
+import 'package:ourwearprototype/shared/reusable/AnUserID.dart';
 //JOELwindows7
 
 class ItemsOnIt {
@@ -13,17 +19,29 @@ class ItemsOnIt {
 class ItemCoverHome extends StatefulWidget {
   final String titling;
   final String imagePath;
-  ItemCoverHome({this.imagePath, this.titling});
+  final String itemId;
+  final String price;
+  final String location;
+  ItemCoverHome(
+      {this.imagePath, this.titling, this.itemId, this.price, this.location});
 
   @override
-  _ItemCoverHomeState createState() =>
-      _ItemCoverHomeState(imagePath: imagePath, titling: titling);
+  _ItemCoverHomeState createState() => _ItemCoverHomeState(
+      imagePath: imagePath,
+      titling: titling,
+      itemId: itemId,
+      location: location,
+      price: price);
 }
 
 class _ItemCoverHomeState extends State<ItemCoverHome> {
   final String titling;
   final String imagePath;
-  _ItemCoverHomeState({this.imagePath, this.titling});
+  final String itemId;
+  final String price;
+  final String location;
+  _ItemCoverHomeState(
+      {this.imagePath, this.titling, this.itemId, this.location, this.price});
 
   @override
   void initState() {
@@ -39,6 +57,8 @@ class _ItemCoverHomeState extends State<ItemCoverHome> {
   Widget build(BuildContext context) {
     String titleP = titling;
     String imageP = imagePath;
+    String itemIde = itemId;
+
     print(titling);
     setState(() {
       titleP = titling;
@@ -47,22 +67,38 @@ class _ItemCoverHomeState extends State<ItemCoverHome> {
     if (imageP == null || imageP == "")
       imageP = "asset/images/anOurwearItemCoverPlaceholder.png";
     if (titleP == null || titleP == "") titleP = "Untitleda";
+    if (itemIde == null || titleP == "") itemIde = "1";
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Image(
-          fit: BoxFit.contain,
-          //loadingBuilder: (context, child, loadingProgress) => Loading(),
-          width: 150.0,
-          height: 175.0,
-          image: AssetImage(imageP),
-        ),
-        Text(
-          titleP,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
+    return FlatButton(
+      onPressed: () {
+        //TODO material page route to the item
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          print('Open Rental of $itemIde which is $titleP');
+          return MakeshiftItemView(
+            itemID: itemIde,
+            itemName: titleP,
+          );
+        }));
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image(
+            fit: BoxFit.contain,
+            //loadingBuilder: (context, child, loadingProgress) => Loading(),
+            width: 150.0,
+            height: 150.0,
+            image: AssetImage(imageP),
+          ),
+          Text(
+            titleP,
+            overflow: TextOverflow.ellipsis,
+          ),
+          DetailsItem(
+            itemId: itemIde,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -118,6 +154,7 @@ class _BrokenItemCoverState extends State<BrokenItemCover> {
             return ItemCoverHome(
               titling: itemCovers.elementAt(index).titling,
               imagePath: itemCovers.elementAt(index).imagePath,
+              itemId: itemCovers.elementAt(index).itemId,
             );
           }),
     );
@@ -278,14 +315,55 @@ class _ViewAllItemsState extends State<ViewAllItems> {
           shrinkWrap: true,
           crossAxisCount: 2,
           children: List.generate(itemsP.length, (index) {
-            return FlatButton(
-              onPressed: () {},
-              child: ItemCoverHome(
-                titling: itemsP[index].titling,
-                imagePath: itemsP[index].imagePath,
-              ),
+            return ItemCoverHome(
+              titling: itemsP[index].titling,
+              imagePath: itemsP[index].imagePath,
             );
           }, growable: true)),
+    );
+  }
+}
+
+class DetailsItem extends StatefulWidget {
+  final itemId;
+  DetailsItem({this.itemId});
+  @override
+  _DetailsItemState createState() => _DetailsItemState(itemId: itemId);
+}
+
+class _DetailsItemState extends State<DetailsItem> {
+  final itemId;
+  _DetailsItemState({this.itemId});
+  final TextStyle stylering = TextStyle(
+    fontSize: 8,
+  );
+
+  String userID;
+  AnUserID anUserID = AnUserID();
+  void getUserID() {
+    userID = anUserID.whatUserID();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<Rental>(
+      stream: DatabaseService(uid: itemId).particularRentalData,
+      builder: (context, snapshot) {
+        return Column(
+          children: [
+            Text(
+              '${snapshot.data.location}',
+              style: stylering,
+              textAlign: TextAlign.start,
+            ),
+            Text(
+              'Rp ${snapshot.data.price}',
+              style: stylering,
+              textAlign: TextAlign.start,
+            ),
+          ],
+        );
+      },
     );
   }
 }
