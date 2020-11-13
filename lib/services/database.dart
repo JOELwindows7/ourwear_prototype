@@ -62,7 +62,7 @@ class DatabaseService {
       'timeBorrowDay': timeBorrowDay,
       'isAvailable': isAvailable,
       'tradeType': tradeType,
-      'location': location,
+      'location': location ?? 'Kosong City',
     });
   }
 
@@ -85,7 +85,7 @@ class DatabaseService {
       'timeBorrowDay': timeBorrowDay,
       'isAvailable': isAvailable,
       'tradeType': tradeType,
-      'location': location,
+      'location': location ?? 'Kosong City',
     });
   }
 
@@ -108,7 +108,7 @@ class DatabaseService {
       'timeBorrowDay': timeBorrowDay,
       'isAvailable': isAvailable,
       'tradeType': tradeType,
-      'location': location,
+      'location': location ?? 'Kosong City',
     });
   }
 
